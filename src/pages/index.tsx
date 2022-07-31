@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { SpotifyConnect } from './components/spotify/SpotifyConnect'
+import { SpotifyConnect } from '../components/spotify/SpotifyConnect'
 
 export default function Index() {
   return (

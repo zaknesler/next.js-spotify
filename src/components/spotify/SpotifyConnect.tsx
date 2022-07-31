@@ -1,8 +1,8 @@
 import React from 'react'
-import { SpotifyLogo } from '../../../assets/icons/spotify'
-import { useSpotifyAuth } from '../../../hooks/useSpotifyAuth'
+import { SpotifyLogo } from '../../assets/icons/spotify'
+import { useSpotifyAuth } from '../../hooks/useSpotifyAuth'
 import useSWR from 'swr'
-import { spotifyFetcher } from '../../../utils/api/spotify/utils'
+import { spotifyFetcher } from '../../utils/api/spotify/utils'
 import Link from 'next/link'
 
 type SpotifyProfileResponse = {
