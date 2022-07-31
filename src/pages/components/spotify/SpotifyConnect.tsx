@@ -7,6 +7,8 @@ export const SpotifyConnect: React.FC<{}> = () => {
 
   if (!auth) return <div>Loading...</div>
 
+  console.log(auth)
+
   return auth.isAuthenticated ? (
     <div>Authenticated</div>
   ) : (

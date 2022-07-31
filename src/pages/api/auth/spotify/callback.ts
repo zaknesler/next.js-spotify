@@ -1,24 +1,44 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { COOKIE_KEYS } from '../../../../utils/api/spotify/constants'
-import { serialize } from 'cookie'
+import { ACCESS_TOKEN_URL } from '../../../../utils/api/spotify/constants'
+import { formatAuthCookies } from '../../../../utils/api/spotify/utils'
 
 type SpotifyAuthResponse = {
-  code: string
   state: string
+  code?: string
+  error?: string
 }
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  const { code, state } = req.query as SpotifyAuthResponse
+type SpotifyAccessTokenResponse = {
+  access_token: string
+  token_type: string
+  expires_in: number
+  refresh_token: string
+  scope: string
+}
 
-  if (!code || !state) {
-    return res.status(400).json({ error: 'Authorization failed.' })
-  }
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { state, code, error } = req.query as SpotifyAuthResponse
 
-  const cookieOptions = { path: '/' }
-  res.setHeader('Set-Cookie', [
-    serialize(COOKIE_KEYS.AUTH_CODE, code, cookieOptions),
-    serialize(COOKIE_KEYS.AUTH_STATE, state, cookieOptions),
-  ])
+  if (error) return res.status(400).json({ error })
+  if (!code) return res.status(400).json({ error: 'Authorization failed.' })
+
+  const authString = `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+  const data: SpotifyAccessTokenResponse = await fetch(ACCESS_TOKEN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: 'Basic ' + Buffer.from(authString).toString('base64'),
+    },
+    body: new URLSearchParams({
+      code,
+      redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+      grant_type: 'authorization_code',
+    }),
+  })
+    .then(data => data.json())
+    .catch(console.log)
+
+  res.setHeader('Set-Cookie', formatAuthCookies({ ...data, state }))
 
   return res.redirect('/')
 }
