@@ -1,19 +1,29 @@
 import React from 'react'
 import { SpotifyLogo } from '../../../assets/icons/spotify'
 import { useSpotifyAuth } from '../../../hooks/useSpotifyAuth'
+import useSWR from 'swr'
+import { spotifyFetcher } from '../../../utils/api/spotify/utils'
+
+type SpotifyProfileResponse = {
+  display_name: string
+}
 
 export const SpotifyConnect: React.FC<{}> = () => {
   const auth = useSpotifyAuth()
 
-  if (!auth) return <div>Loading...</div>
+  const { data, error } = useSWR<SpotifyProfileResponse>(
+    auth ? ['https://api.spotify.com/v1/me', auth] : null,
+    spotifyFetcher,
+  )
 
-  console.log(auth)
+  if (!auth || !data) return <div>Loading...</div>
+  if (error) return <div>Failed to load!</div>
 
   return auth.isAuthenticated ? (
-    <div>Authenticated</div>
+    <div>{data.display_name}</div>
   ) : (
     <a
-      href={auth.authUrl}
+      href="/api/auth/spotify/login"
       className="inline-flex items-center gap-2 rounded-lg bg-[#1db954] px-4 py-3 font-medium text-white no-underline hover:bg-green-600"
     >
       <SpotifyLogo className="h-6 w-6" color="white" />

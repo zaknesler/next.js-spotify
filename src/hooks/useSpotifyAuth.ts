@@ -4,8 +4,7 @@ import { SpotifyAuthCookies } from '../utils/api/spotify/types'
 import { isAccessTokenExpired } from '../utils/api/spotify/utils'
 import { useCookies } from './useCookies'
 
-type SpotifyAuth = {
-  authUrl: string
+export type SpotifyAuthData = {
   isAuthenticated: boolean
   user: null | {
     access_token: string
@@ -16,10 +15,10 @@ type SpotifyAuth = {
   }
 }
 
-export const useSpotifyAuth = () => {
+export const useSpotifyAuth = (): SpotifyAuthData => {
   const router = useRouter()
   const cookies = useCookies<SpotifyAuthCookies>()
-  const [auth, setAuth] = useState<SpotifyAuth>(null)
+  const [auth, setAuth] = useState<SpotifyAuthData>(null)
 
   useEffect(() => {
     if (!cookies) return
@@ -33,7 +32,6 @@ export const useSpotifyAuth = () => {
     }
 
     setAuth({
-      authUrl: '/api/auth/spotify/login',
       isAuthenticated: isAuthenticated,
       user: isAuthenticated
         ? {
