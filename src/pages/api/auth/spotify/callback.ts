@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { ACCESS_TOKEN_URL } from '../../../../utils/api/spotify/constants'
 import { formatAuthCookies } from '../../../../utils/api/spotify/utils'
 
-type SpotifyAuthResponse = {
+type AuthQueryParams = {
   state: string
   code?: string
   error?: string
@@ -17,7 +17,7 @@ type SpotifyAccessTokenResponse = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { state, code, error } = req.query as SpotifyAuthResponse
+  const { state, code, error } = req.query as AuthQueryParams
 
   if (error) return res.status(400).json({ error })
   if (!code) return res.status(400).json({ error: 'Authorization failed.' })
