@@ -10,7 +10,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>Next.js</title>
+        <title>Next.js + Spotify</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

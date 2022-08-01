@@ -22,7 +22,7 @@ export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
           onClick={logout}
           className="text-sm font-semibold text-[#1db954] hover:text-green-600 hover:underline"
         >
-          Logout
+          Sign out
         </a>
       </div>
     )
