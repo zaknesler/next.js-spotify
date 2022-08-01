@@ -15,12 +15,14 @@ export type SpotifyContextData = {
 
 export type SpotifyAuthData = {
   isAuthenticated: boolean
-  user: null | {
-    access_token: string
-    expires_at: Date
-    scopes: Array<string>
-    state: string
-  }
+  user?: SpotifyAuthUser
+}
+
+export type SpotifyAuthUser = {
+  access_token: string
+  expires_at: Date
+  scopes: string[]
+  state: string
 }
 
 export type Image = {

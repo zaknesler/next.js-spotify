@@ -7,9 +7,12 @@ import { SWRConfig } from 'swr'
 import { fetcher } from '../utils/fetcher'
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
+import { useEffect } from 'react'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const auth = useSpotifyAuth()
+
+  useEffect(() => console.log('auth updated', auth), [auth])
 
   return (
     <SWRConfig value={{ fetcher }}>

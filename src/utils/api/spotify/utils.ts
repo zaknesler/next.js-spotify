@@ -39,5 +39,5 @@ export const formatAuthCookies = (data: {
 export const isAccessTokenExpired = token =>
   new Date().valueOf() >= token.valueOf()
 
-export const haveAuthScopesChanged = (scopes: Array<string>) =>
+export const haveAuthScopesChanged = (scopes: string[]) =>
   !AUTH_SCOPES.every(scope => scopes.includes(scope))
