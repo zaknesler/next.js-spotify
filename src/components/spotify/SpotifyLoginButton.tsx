@@ -30,7 +30,7 @@ export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   return (
     <div className={className}>
       <Link href="/api/auth/spotify/login">
-        <a className="inline-flex items-center gap-2 rounded-lg bg-[#1db954] px-4 py-3 font-medium text-white no-underline hover:bg-green-600">
+        <a className="flex items-center gap-2 rounded-lg bg-[#1db954] px-4 py-3 font-medium text-white no-underline hover:bg-green-600 sm:inline-flex">
           <SpotifyLogo className="h-6 w-6" color="white" />
           <span>Sign in with Spotify</span>
         </a>

@@ -14,7 +14,7 @@ export default function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-12">
+      <main className="p-8 sm:p-12">
         <SpotifyLoginButton className="mb-6" />
 
         {auth?.isAuthenticated && (

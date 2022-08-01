@@ -27,7 +27,7 @@ export const SpotifyProfile: React.FC<{}> = () => {
       <h3 className="text-xl font-semibold">Hello, {data.display_name}!</h3>
 
       <p className="mt-2 max-w-sm leading-relaxed text-gray-600">
-        You&apos;ve hooked up your Spotify account, nice!
+        You&apos;ve connected your Spotify account. Nice!
       </p>
     </div>
   )
