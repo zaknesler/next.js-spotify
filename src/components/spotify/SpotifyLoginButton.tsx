@@ -6,13 +6,8 @@ import Link from 'next/link'
 export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const { auth, invalidate } = useSpotifyAuthContext()
+  const { auth, logout } = useSpotifyAuthContext()
   if (!auth) return
-
-  const logout = async () =>
-    await fetch('/api/auth/spotify/logout', { method: 'POST' })
-      .catch(console.log)
-      .then(invalidate)
 
   if (auth.isAuthenticated)
     return (

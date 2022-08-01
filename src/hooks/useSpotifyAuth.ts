@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { debug } from '../utils/logger'
 import {
   SpotifyAuthCookies,
   SpotifyAuthData,
@@ -21,9 +22,17 @@ export const useSpotifyAuth = (): SpotifyContextData => {
 
   const invalidate = () => setAuth({ isAuthenticated: false, user: null })
 
-  const refresh = () => {
-    console.log('refreshing access token!')
-  }
+  const logout = async () =>
+    await fetch('/api/auth/spotify/logout', { method: 'POST' })
+      .catch(console.log)
+      .then(invalidate)
+
+  const refresh = useCallback(() => {
+    debug('refreshing access token!')
+
+    // @todo make this an API call
+    router.push('/api/auth/spotify/reauth')
+  }, [router])
 
   useEffect(() => {
     if (!cookies) return
@@ -39,7 +48,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
       : null
 
     if (isAuthenticated && isAccessTokenExpired(user.expires_at)) {
-      router.push('/api/auth/spotify/reauth')
+      refresh()
     }
 
     if (isAuthenticated && haveAuthScopesChanged(user.scopes)) {
@@ -47,7 +56,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
     }
 
     setAuth({ isAuthenticated, user })
-  }, [cookies, router])
+  }, [cookies, router, refresh])
 
-  return { auth, invalidate, refresh }
+  return { auth, invalidate, logout, refresh }
 }

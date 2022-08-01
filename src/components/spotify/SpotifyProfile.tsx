@@ -18,7 +18,7 @@ export const SpotifyProfile: React.FC<{}> = () => {
     spotifyFetcher,
   )
 
-  if (!auth) return
+  if (!auth || !auth.isAuthenticated) return
   if (!data) return <div>Loading...</div>
   if (error) return <div>Failed to load!</div>
 
