@@ -1,14 +1,14 @@
 import React from 'react'
 import { SpotifyLogo } from '../../assets/icons/spotify'
-import { useSpotifyAuth } from '../../hooks/useSpotifyAuth'
+import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 import Link from 'next/link'
 
 export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const auth = useSpotifyAuth()
+  const auth = useSpotifyAuthContext()
 
-  if (!auth) return <div>Loading...</div>
+  if (!auth) return
 
   return (
     !auth.isAuthenticated && (

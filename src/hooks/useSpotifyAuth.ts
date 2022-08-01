@@ -1,21 +1,14 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { SpotifyAuthCookies } from '../utils/api/spotify/types'
+import { useContext, useEffect, useState } from 'react'
+import { SpotifyAuthCookies, SpotifyAuthData } from '../utils/api/spotify/types'
 import {
   haveAuthScopesChanged,
   isAccessTokenExpired,
 } from '../utils/api/spotify/utils'
+import { SpotifyAuthContext } from '../utils/SpotifyAuthContext'
 import { useCookies } from './useCookies'
 
-export type SpotifyAuthData = {
-  isAuthenticated: boolean
-  user: null | {
-    access_token: string
-    expires_at: Date
-    scopes: Array<string>
-    state: string
-  }
-}
+export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
 export const useSpotifyAuth = (): SpotifyAuthData => {
   const router = useRouter()
