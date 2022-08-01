@@ -16,7 +16,7 @@ export default function Index() {
       </Head>
 
       <main className="p-8 sm:p-12">
-        {auth?.isAuthenticated ? (
+        {auth.isAuthenticated ? (
           <>
             <SpotifyLogoutButton />
             <div className="mt-2 space-y-6">

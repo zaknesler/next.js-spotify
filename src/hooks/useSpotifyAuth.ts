@@ -18,7 +18,10 @@ export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
   const cookies = useCookies<SpotifyAuthCookies>()
-  const [auth, setAuth] = useState<SpotifyAuthData>(null)
+  const [auth, setAuth] = useState<SpotifyAuthData>({
+    isAuthenticated: false,
+    user: null,
+  })
 
   const invalidate = () => setAuth({ isAuthenticated: false, user: null })
 
