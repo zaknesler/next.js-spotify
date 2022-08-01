@@ -11,7 +11,6 @@ export type SpotifyAuthData = {
   isAuthenticated: boolean
   user: null | {
     access_token: string
-    refresh_token: string
     expires_at: Date
     scopes: Array<string>
     state: string
@@ -27,28 +26,22 @@ export const useSpotifyAuth = (): SpotifyAuthData => {
     if (!cookies) return
 
     const isAuthenticated = Boolean(cookies.spotify_access_token)
-    const authNew = {
-      isAuthenticated: isAuthenticated,
-      user: isAuthenticated
-        ? {
-            access_token: cookies.spotify_access_token,
-            refresh_token: cookies.spotify_refresh_token,
-            expires_at: new Date(cookies.spotify_expires_at * 1000),
-            scopes: cookies.spotify_original_auth_scope.split(' '),
-            state: cookies.spotify_state,
-          }
-        : null,
+    const user = {
+      access_token: cookies.spotify_access_token,
+      expires_at: new Date(cookies.spotify_expires_at * 1000),
+      scopes: cookies.spotify_original_auth_scope.split(' '),
+      state: cookies.spotify_state,
     }
 
-    if (isAuthenticated && isAccessTokenExpired(authNew.user.expires_at)) {
+    if (isAuthenticated && isAccessTokenExpired(user.expires_at)) {
       router.push('/api/auth/spotify/reauth')
     }
 
-    if (isAuthenticated && haveAuthScopesChanged(authNew.user.scopes)) {
+    if (isAuthenticated && haveAuthScopesChanged(user.scopes)) {
       router.push('/api/auth/spotify/login')
     }
 
-    setAuth(authNew)
+    setAuth({ isAuthenticated, user: isAuthenticated ? user : null })
   }, [cookies, router])
 
   return auth

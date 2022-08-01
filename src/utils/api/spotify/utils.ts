@@ -23,7 +23,9 @@ export const formatAuthCookies = (data: {
 }) =>
   [
     formatCookie(COOKIE_KEYS.ACCESS_TOKEN, data.access_token),
-    formatCookie(COOKIE_KEYS.REFRESH_TOKEN, data.refresh_token),
+    formatCookie(COOKIE_KEYS.REFRESH_TOKEN, data.refresh_token, {
+      httpOnly: true,
+    }),
     formatCookie(COOKIE_KEYS.SCOPE, data.scope),
     formatCookie(COOKIE_KEYS.STATE, data.state),
     formatCookie(
