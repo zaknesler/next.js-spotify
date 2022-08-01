@@ -5,12 +5,12 @@ import {
   haveAuthScopesChanged,
   isAccessTokenExpired,
 } from '../utils/api/spotify/utils'
-import { SpotifyAuthContext } from '../utils/SpotifyAuthContext'
+import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
 import { useCookies } from './useCookies'
 
-export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
+export const useSpotifyAuth = () => useContext(SpotifyAuthContext)
 
-export const useSpotifyAuth = (): SpotifyAuthData => {
+export const SpotifyAuth = (): SpotifyAuthData => {
   const router = useRouter()
   const cookies = useCookies<SpotifyAuthCookies>()
   const [auth, setAuth] = useState<SpotifyAuthData>(null)

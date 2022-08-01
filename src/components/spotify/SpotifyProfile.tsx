@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
+import { useSpotifyAuth } from '../../hooks/useSpotifyAuth'
 import useSWR from 'swr'
 import { spotifyFetcher } from '../../utils/api/spotify/utils'
 
@@ -8,7 +8,7 @@ type SpotifyProfileResponse = {
 }
 
 export const SpotifyProfile: React.FC<{}> = () => {
-  const auth = useSpotifyAuthContext()
+  const auth = useSpotifyAuth()
   const { data, error } = useSWR<SpotifyProfileResponse>(
     auth ? ['https://api.spotify.com/v1/me', auth] : null,
     spotifyFetcher,
