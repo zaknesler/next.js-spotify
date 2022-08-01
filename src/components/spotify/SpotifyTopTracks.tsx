@@ -33,12 +33,15 @@ export const SpotifyTopTracks: React.FC<{}> = () => {
       </h3>
 
       <ul className="mt-3 ml-6 list-disc space-y-3">
-        {data.items.map(track => (
-          <li key={track.id}>
-            <div className="font-medium">{track.name}</div>
-            <div className="text-sm text-gray-600">{track.artists[0].name}</div>
-          </li>
-        ))}
+        {data.items &&
+          data.items.map(track => (
+            <li key={track.id}>
+              <div className="font-medium">{track.name}</div>
+              <div className="text-sm text-gray-600">
+                {track.artists[0].name}
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   )
