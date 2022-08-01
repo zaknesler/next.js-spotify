@@ -1,18 +1,20 @@
 import { formatCookie } from '../..'
-import { SpotifyAuthData } from '../../../hooks/useSpotifyAuth'
 import { AUTH_SCOPES, COOKIE_KEYS } from './constants'
+import type { SpotifyAuthData } from './types'
 
 export const spotifyFetcher = (
   input: RequestInfo | URL,
   init: SpotifyAuthData,
-): Promise<Response> | any =>
-  fetch(input, {
+): Promise<Response> | any => {
+  if (!init.isAuthenticated) return null
+  return fetch(input, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${init?.user?.access_token}`,
+      Authorization: `Bearer ${init.user.access_token}`,
     },
   }).then(res => res.json())
+}
 
 export const formatAuthCookies = (data: {
   access_token?: string

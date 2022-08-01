@@ -6,6 +6,11 @@ export type SpotifyAuthCookies = {
   spotify_original_auth_scope?: string
 }
 
+export type SpotifyContextData = {
+  auth: SpotifyAuthData
+  invalidate: () => void
+}
+
 export type SpotifyAuthData = {
   isAuthenticated: boolean
   user: null | {

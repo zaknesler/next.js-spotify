@@ -1,4 +1,4 @@
 import { createContext } from 'react'
-import type { SpotifyAuthData } from '../api/spotify/types'
+import type { SpotifyContextData } from '../api/spotify/types'
 
-export const SpotifyAuthContext = createContext<SpotifyAuthData>(null)
+export const SpotifyAuthContext = createContext<SpotifyContextData>(null)
