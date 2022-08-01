@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { SpotifyAuthCookies } from '../utils/api/spotify/types'
-import { isAccessTokenExpired } from '../utils/api/spotify/utils'
+import {
+  haveAuthScopesChanged,
+  isAccessTokenExpired,
+} from '../utils/api/spotify/utils'
 import { useCookies } from './useCookies'
 
 export type SpotifyAuthData = {
@@ -24,25 +27,28 @@ export const useSpotifyAuth = (): SpotifyAuthData => {
     if (!cookies) return
 
     const isAuthenticated = Boolean(cookies.spotify_access_token)
-    const tokenExpiration = new Date(cookies.spotify_expires_at * 1000)
-
-    if (isAuthenticated && isAccessTokenExpired(tokenExpiration)) {
-      console.log('Need to reauth!')
-      router.push('/api/auth/spotify/reauth')
-    }
-
-    setAuth({
+    const authNew = {
       isAuthenticated: isAuthenticated,
       user: isAuthenticated
         ? {
             access_token: cookies.spotify_access_token,
             refresh_token: cookies.spotify_refresh_token,
-            expires_at: tokenExpiration,
-            scopes: cookies.spotify_original_auth_scope?.split(' '),
+            expires_at: new Date(cookies.spotify_expires_at * 1000),
+            scopes: cookies.spotify_original_auth_scope.split(' '),
             state: cookies.spotify_state,
           }
         : null,
-    })
+    }
+
+    if (isAuthenticated && isAccessTokenExpired(authNew.user.expires_at)) {
+      router.push('/api/auth/spotify/reauth')
+    }
+
+    if (isAuthenticated && haveAuthScopesChanged(authNew.user.scopes)) {
+      router.push('/api/auth/spotify/login')
+    }
+
+    setAuth(authNew)
   }, [cookies, router])
 
   return auth

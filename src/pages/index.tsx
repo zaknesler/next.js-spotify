@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { SpotifyConnect } from '../components/spotify/SpotifyConnect'
+import { SpotifyLoginButton } from '../components/spotify/SpotifyLoginButton'
+import { SpotifyProfile } from '../components/spotify/SpotifyProfile'
 
 export default function Index() {
   return (
@@ -10,7 +11,11 @@ export default function Index() {
       </Head>
 
       <main className="p-12">
-        <SpotifyConnect />
+        <SpotifyLoginButton className="mb-6" />
+
+        <div>
+          <SpotifyProfile />
+        </div>
       </main>
     </>
   )

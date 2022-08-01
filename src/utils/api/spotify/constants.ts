@@ -1,5 +1,15 @@
 export const AUTH_URL = 'https://accounts.spotify.com/authorize'
-export const AUTH_SCOPES = ['user-read-private', 'user-read-email']
+export const AUTH_SCOPES = [
+  'playlist-read-collaborative',
+  'playlist-read-private',
+  'user-library-read',
+  'user-modify-playback-state',
+  'user-read-currently-playing',
+  'user-read-email',
+  'user-read-playback-state',
+  'user-read-private',
+  'streaming',
+]
 
 export const ACCESS_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 

@@ -1,6 +1,18 @@
 import { formatCookie } from '../..'
 import { SpotifyAuthData } from '../../../hooks/useSpotifyAuth'
-import { COOKIE_KEYS } from './constants'
+import { AUTH_SCOPES, COOKIE_KEYS } from './constants'
+
+export const spotifyFetcher = (
+  input: RequestInfo | URL,
+  init: SpotifyAuthData,
+): Promise<Response> | any =>
+  fetch(input, {
+    ...init,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${init?.user?.access_token}`,
+    },
+  }).then(res => res.json())
 
 export const formatAuthCookies = (data: {
   access_token?: string
@@ -23,14 +35,5 @@ export const formatAuthCookies = (data: {
 export const isAccessTokenExpired = token =>
   new Date().valueOf() >= token.valueOf()
 
-export const spotifyFetcher = (
-  input: RequestInfo | URL,
-  init?: SpotifyAuthData,
-): Promise<Response> | any =>
-  fetch(input, {
-    ...init,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${init?.user?.access_token}`,
-    },
-  }).then(res => res.json())
+export const haveAuthScopesChanged = (scopes: Array<string>) =>
+  !AUTH_SCOPES.every(scope => scopes.includes(scope))
