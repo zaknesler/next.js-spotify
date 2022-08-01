@@ -18,7 +18,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     req.cookies as SpotifyAuthCookies
 
   if (!isAccessTokenExpired(new Date(spotify_expires_at * 1000))) {
-    return res.status(200).json({ message: 'No need to reauthenticate.' })
+    // No need to reauth
+    return res.redirect('/')
   }
 
   const authString = `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
