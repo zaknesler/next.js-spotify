@@ -12,13 +12,18 @@ import {
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
 import { useCookies } from './useCookies'
 
-export const useSpotifyAuth = () => useContext(SpotifyAuthContext)
+export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
-export const SpotifyAuth = (): SpotifyContextData => {
+export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
   const cookies = useCookies<SpotifyAuthCookies>()
   const [auth, setAuth] = useState<SpotifyAuthData>(null)
+
   const invalidate = () => setAuth({ isAuthenticated: false, user: null })
+
+  const refresh = () => {
+    console.log('refreshing access token!')
+  }
 
   useEffect(() => {
     if (!cookies) return
@@ -44,5 +49,5 @@ export const SpotifyAuth = (): SpotifyContextData => {
     setAuth({ isAuthenticated, user })
   }, [cookies, router])
 
-  return { auth, invalidate }
+  return { auth, invalidate, refresh }
 }

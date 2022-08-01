@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSpotifyAuth } from '../../hooks/useSpotifyAuth'
+import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 import useSWR from 'swr'
 import { spotifyFetcher } from '../../utils/api/spotify/utils'
 import { ENDPOINTS } from '../../utils/api/spotify/constants'
@@ -14,7 +14,7 @@ type SpotifyTopTracksResponse = {
 }
 
 export const SpotifyTopTracks: React.FC<{}> = () => {
-  const { auth } = useSpotifyAuth()
+  const { auth } = useSpotifyAuthContext()
   const { data, error } = useSWR<SpotifyTopTracksResponse>(
     auth?.isAuthenticated ? [ENDPOINTS.TOP_TRACKS, auth] : null,
     spotifyFetcher,

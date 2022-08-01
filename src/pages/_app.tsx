@@ -6,10 +6,10 @@ import { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
 import { fetcher } from '../utils/fetcher'
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
-import { SpotifyAuth } from '../hooks/useSpotifyAuth'
+import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const auth = SpotifyAuth()
+  const auth = useSpotifyAuth()
 
   return (
     <SWRConfig value={{ fetcher }}>

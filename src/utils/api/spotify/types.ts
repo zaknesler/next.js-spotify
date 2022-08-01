@@ -9,6 +9,7 @@ export type SpotifyAuthCookies = {
 export type SpotifyContextData = {
   auth: SpotifyAuthData
   invalidate: () => void
+  refresh: () => void
 }
 
 export type SpotifyAuthData = {
