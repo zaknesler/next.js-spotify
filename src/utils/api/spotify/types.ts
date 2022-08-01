@@ -20,3 +20,29 @@ export type SpotifyAuthData = {
     state: string
   }
 }
+
+export type Image = {
+  url: string
+  width: number
+  height: number
+}
+
+export type Artist = {
+  id: string
+  name: string
+  images: Image[]
+}
+
+export type Album = {
+  id: string
+  name: string
+  artists: Artist[]
+  images: Image[]
+}
+
+export type Track = {
+  id: string
+  name: string
+  artists: Artist[]
+  album: Album
+}

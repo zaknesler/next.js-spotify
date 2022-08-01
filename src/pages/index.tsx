@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { SpotifyLoginButton } from '../components/spotify/SpotifyLoginButton'
 import { SpotifyProfile } from '../components/spotify/SpotifyProfile'
+import { SpotifyTopTracks } from '../components/spotify/SpotifyTopTracks'
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
 
 export default function Index() {
@@ -17,8 +18,9 @@ export default function Index() {
         <SpotifyLoginButton className="mb-6" />
 
         {auth?.isAuthenticated && (
-          <div>
+          <div className="space-y-6">
             <SpotifyProfile />
+            <SpotifyTopTracks />
           </div>
         )}
       </main>
