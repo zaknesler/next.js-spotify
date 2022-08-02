@@ -10,7 +10,7 @@ import {
 } from '../utils/api/spotify/types'
 import {
   haveAuthScopesChanged,
-  isAccessTokenExpired,
+  hasAccessTokenExpired,
   spotifyFetcher,
 } from '../utils/api/spotify/utils'
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
@@ -62,7 +62,10 @@ export const useSpotifyAuth = (): SpotifyContextData => {
   }, [auth.session, cookies, user])
 
   useEffect(() => {
-    if (auth.isAuthenticated && isAccessTokenExpired(auth.session.expires_at)) {
+    if (
+      auth.isAuthenticated &&
+      hasAccessTokenExpired(auth.session.expires_at)
+    ) {
       router.replace('/api/auth/spotify/reauth')
       return
     }
