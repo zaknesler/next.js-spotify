@@ -3,7 +3,7 @@ import { ACCESS_TOKEN_URL } from '../../../../utils/api/spotify/constants'
 import { SpotifyAuthCookies } from '../../../../utils/api/spotify/types'
 import {
   formatAuthCookies,
-  isAccessTokenExpired,
+  hasAccessTokenExpired,
 } from '../../../../utils/api/spotify/utils'
 
 type SpotifyRefreshTokenResponse = {
@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { spotify_refresh_token, spotify_expires_at } =
     req.cookies as SpotifyAuthCookies
 
-  if (!isAccessTokenExpired(new Date(spotify_expires_at * 1000))) {
+  if (!hasAccessTokenExpired(new Date(spotify_expires_at * 1000))) {
     // No need to reauth
     return res.redirect('/')
   }
