@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { debug } from '../utils/logger'
+import useSWR from 'swr'
+import { ENDPOINTS } from '../utils/api/spotify/constants'
 import {
+  ProfileResponse,
   SpotifyAuthCookies,
   SpotifyAuthData,
   SpotifyContextData,
@@ -9,6 +11,7 @@ import {
 import {
   haveAuthScopesChanged,
   isAccessTokenExpired,
+  spotifyFetcher,
 } from '../utils/api/spotify/utils'
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
 import { useCookies } from './useCookies'
@@ -17,31 +20,53 @@ export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
-  const cookies = useCookies<SpotifyAuthCookies>()
+  const [cookies, setCookies] = useCookies<SpotifyAuthCookies>()
   const [auth, setAuth] = useState<SpotifyAuthData>({
     isAuthenticated: false,
+    session: null,
     user: null,
   })
 
-  const invalidate = () => setAuth({ isAuthenticated: false, user: null })
+  const { data: user, mutate } = useSWR<ProfileResponse>(
+    auth.isAuthenticated ? [ENDPOINTS.PROFILE, auth] : null,
+    spotifyFetcher,
+  )
+
+  const invalidate = () =>
+    setAuth({
+      isAuthenticated: false,
+      session: null,
+      user: null,
+    })
 
   const logout = async () =>
     await fetch('/api/auth/spotify/logout', { method: 'POST' })
       .catch(console.log)
       .then(invalidate)
+      .then(() => mutate())
 
-  const refresh = useCallback(() => {
-    debug('refreshing access token!')
+  useEffect(() => {
+    console.log('middleware')
 
-    // @todo make this an API call
-    router.push('/api/auth/spotify/reauth')
-  }, [router])
+    if (auth.isAuthenticated && isAccessTokenExpired(auth.session.expires_at)) {
+      router.replace('/api/auth/spotify/reauth')
+      return
+    }
+
+    if (auth.isAuthenticated && haveAuthScopesChanged(auth.session.scopes)) {
+      router.replace('/api/auth/spotify/login')
+      return
+    }
+  }, [auth, router])
 
   useEffect(() => {
     if (!cookies) return
+    if (auth.session || auth.isAuthenticated) return
+
+    console.log('setting session', { cookies, session: auth.session })
 
     const isAuthenticated = Boolean(cookies?.spotify_access_token)
-    const user = isAuthenticated
+    const session = isAuthenticated
       ? {
           access_token: cookies.spotify_access_token,
           expires_at: new Date(cookies.spotify_expires_at * 1000),
@@ -50,16 +75,8 @@ export const useSpotifyAuth = (): SpotifyContextData => {
         }
       : null
 
-    if (isAuthenticated && isAccessTokenExpired(user.expires_at)) {
-      refresh()
-    }
+    setAuth({ isAuthenticated, session: session, user: user ?? null })
+  }, [cookies, router, user, auth.session, auth.isAuthenticated])
 
-    if (isAuthenticated && haveAuthScopesChanged(user.scopes)) {
-      router.push('/api/auth/spotify/login')
-    }
-
-    setAuth({ isAuthenticated, user })
-  }, [cookies, router, refresh])
-
-  return { auth, invalidate, logout, refresh }
+  return { auth, user, invalidate, logout }
 }

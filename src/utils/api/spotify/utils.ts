@@ -11,7 +11,7 @@ export const spotifyFetcher = (
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${init.user.access_token}`,
+      Authorization: `Bearer ${init.session.access_token}`,
     },
   }).then(res => res.json())
 }

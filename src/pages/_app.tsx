@@ -1,18 +1,14 @@
-import '../assets/css/app.css'
 import 'tailwindcss/tailwind.css'
-
-import Head from 'next/head'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 import { SWRConfig } from 'swr'
-import { fetcher } from '../utils/fetcher'
-import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
-import { useEffect } from 'react'
+import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
+import { fetcher } from '../utils/fetcher'
+import '../assets/css/app.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const auth = useSpotifyAuth()
-
-  useEffect(() => console.log('auth updated', auth), [auth])
 
   return (
     <SWRConfig value={{ fetcher }}>

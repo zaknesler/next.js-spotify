@@ -1,7 +1,7 @@
+import Link from 'next/link'
 import React from 'react'
 import { SpotifyLogo } from '../../assets/icons/spotify'
 import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
-import Link from 'next/link'
 
 export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   className,
@@ -9,6 +9,7 @@ export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   const { auth, logout } = useSpotifyAuthContext()
 
   if (!auth) return
+
   if (auth.isAuthenticated)
     return (
       <div className="mb-3">

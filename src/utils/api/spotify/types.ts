@@ -8,21 +8,29 @@ export type SpotifyAuthCookies = {
 
 export type SpotifyContextData = {
   auth: SpotifyAuthData
+  user: ProfileResponse
   invalidate: () => void
   logout: () => void
-  refresh: () => void
 }
 
 export type SpotifyAuthData = {
   isAuthenticated: boolean
-  user?: SpotifyAuthUser
+  session?: SpotifyAuthSession
+  user: ProfileResponse
 }
 
-export type SpotifyAuthUser = {
+export type SpotifyAuthSession = {
   access_token: string
   expires_at: Date
   scopes: string[]
   state: string
+}
+
+export type ProfileResponse = {
+  id: string
+  email: string
+  display_name: string
+  product: 'premium' | 'free' | 'open'
 }
 
 export type Image = {

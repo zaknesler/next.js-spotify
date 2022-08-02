@@ -1,9 +1,9 @@
 import React from 'react'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 import useSWR from 'swr'
-import { spotifyFetcher } from '../../utils/api/spotify/utils'
+import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 import { ENDPOINTS } from '../../utils/api/spotify/constants'
 import type { Track } from '../../utils/api/spotify/types'
+import { spotifyFetcher } from '../../utils/api/spotify/utils'
 
 type SpotifyTopTracksResponse = {
   items: Track[]
