@@ -20,7 +20,7 @@ export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
-  const [cookies, setCookies] = useCookies<SpotifyAuthCookies>()
+  const cookies = useCookies<SpotifyAuthCookies>()
   const [auth, setAuth] = useState<SpotifyAuthData>({
     isAuthenticated: false,
     session: null,
@@ -45,9 +45,23 @@ export const useSpotifyAuth = (): SpotifyContextData => {
       .then(invalidate)
       .then(() => mutate())
 
-  useEffect(() => {
-    console.log('middleware')
+  const checkAuth = useCallback(() => {
+    if (auth.session) return
 
+    const isAuthenticated = Boolean(cookies?.spotify_access_token)
+    const session = isAuthenticated
+      ? {
+          access_token: cookies.spotify_access_token,
+          expires_at: new Date(cookies.spotify_expires_at * 1000),
+          scopes: cookies.spotify_original_auth_scope.split(' '),
+          state: cookies.spotify_state,
+        }
+      : null
+
+    setAuth({ isAuthenticated, session: session, user: user ?? null })
+  }, [auth.session, cookies, user])
+
+  useEffect(() => {
     if (auth.isAuthenticated && isAccessTokenExpired(auth.session.expires_at)) {
       router.replace('/api/auth/spotify/reauth')
       return
@@ -61,22 +75,8 @@ export const useSpotifyAuth = (): SpotifyContextData => {
 
   useEffect(() => {
     if (!cookies) return
-    if (auth.session || auth.isAuthenticated) return
-
-    console.log('setting session', { cookies, session: auth.session })
-
-    const isAuthenticated = Boolean(cookies?.spotify_access_token)
-    const session = isAuthenticated
-      ? {
-          access_token: cookies.spotify_access_token,
-          expires_at: new Date(cookies.spotify_expires_at * 1000),
-          scopes: cookies.spotify_original_auth_scope.split(' '),
-          state: cookies.spotify_state,
-        }
-      : null
-
-    setAuth({ isAuthenticated, session: session, user: user ?? null })
-  }, [cookies, router, user, auth.session, auth.isAuthenticated])
+    checkAuth()
+  }, [cookies, checkAuth])
 
   return { auth, user, invalidate, logout }
 }

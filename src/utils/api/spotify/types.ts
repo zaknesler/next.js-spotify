@@ -39,22 +39,43 @@ export type Image = {
   height: number
 }
 
-export type Artist = {
-  id: string
-  name: string
-  images: Image[]
-}
-
 export type Album = {
   id: string
   name: string
+  album_type: string
   artists: Artist[]
+  available_markets: string[]
+  href: string
   images: Image[]
+  release_date: Date
+  release_date_precision: string
+  total_tracks: number
+  type: string
+  uri: string
+}
+
+export type Artist = {
+  id: string
+  name: string
+  type: string
+  href: string
+  uri: string
 }
 
 export type Track = {
   id: string
   name: string
-  artists: Artist[]
   album: Album
+  artists: Artist[]
+  available_markets: string[]
+  disc_number: number
+  duration_ms: number
+  explicit: boolean
+  href: string
+  is_local: boolean
+  popularity: number
+  preview_url: string
+  track_number: number
+  type: string
+  uri: string
 }

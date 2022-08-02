@@ -1,7 +1,9 @@
 import Head from 'next/head'
+import { SpotifyCurrentlyPlaying } from '../components/spotify/SpotifyCurrentlyPlaying'
 import { SpotifyLoginButton } from '../components/spotify/SpotifyLoginButton'
 import { SpotifyLogoutButton } from '../components/spotify/SpotifyLogoutButton'
 import { SpotifyProfile } from '../components/spotify/SpotifyProfile'
+import { SpotifyRecentTracks } from '../components/spotify/SpotifyRecentTracks'
 import { SpotifyTopTracks } from '../components/spotify/SpotifyTopTracks'
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
 
@@ -21,6 +23,8 @@ export default function Index() {
             <SpotifyLogoutButton />
             <div className="mt-2 space-y-6">
               <SpotifyProfile />
+              <SpotifyCurrentlyPlaying />
+              <SpotifyRecentTracks />
               <SpotifyTopTracks />
             </div>
           </>

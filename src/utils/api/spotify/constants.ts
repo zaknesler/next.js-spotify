@@ -10,8 +10,10 @@ export const AUTH_SCOPES = [
   'user-modify-playback-state',
   'user-read-currently-playing',
   'user-read-email',
+  'user-read-playback-position',
   'user-read-playback-state',
   'user-read-private',
+  'user-read-recently-played',
   'user-top-read',
 ]
 
@@ -26,4 +28,6 @@ export const COOKIE_KEYS = {
 export const ENDPOINTS = {
   PROFILE: `${API_BASE_URL}/me`,
   TOP_TRACKS: `${API_BASE_URL}/me/top/tracks`,
+  CURRENTLY_PLAYING: `${API_BASE_URL}/me/player/currently-playing`,
+  RECENTLY_PLAYED: `${API_BASE_URL}/me/player/recently-played`,
 }

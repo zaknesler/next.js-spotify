@@ -12,7 +12,7 @@ export const SpotifyLogoutButton: React.FC<{ className?: string }> = ({
     <div className={className}>
       <a
         href="#"
-        onClick={logout}
+        onClickCapture={logout}
         className="text-sm font-semibold text-[#1db954] hover:text-green-600 hover:underline"
       >
         Sign out
