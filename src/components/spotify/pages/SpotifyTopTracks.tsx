@@ -1,9 +1,10 @@
 import React from 'react'
 import useSWR from 'swr'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
-import { ENDPOINTS } from '../../utils/api/spotify/constants'
-import type { Track } from '../../utils/api/spotify/types'
-import { spotifyFetcher } from '../../utils/api/spotify/utils'
+import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
+import { ENDPOINTS } from '../../../utils/api/spotify/constants'
+import type { Track } from '../../../utils/api/spotify/types'
+import { spotifyFetcher } from '../../../utils/api/spotify/utils'
+import { TrackItem } from '../TrackItem'
 
 type SpotifyTopTracksResponse = {
   items: Track[]
@@ -13,7 +14,9 @@ type SpotifyTopTracksResponse = {
   next: string
 }
 
-export const SpotifyTopTracks: React.FC<{}> = () => {
+export const SpotifyTopTracks: React.FC<{ className?: string }> = ({
+  className,
+}) => {
   const { auth } = useSpotifyAuthContext()
   const { data, error } = useSWR<SpotifyTopTracksResponse>(
     auth?.isAuthenticated ? [ENDPOINTS.TOP_TRACKS, auth] : null,
@@ -25,21 +28,14 @@ export const SpotifyTopTracks: React.FC<{}> = () => {
   if (error) return <div>Failed to load!</div>
 
   return (
-    <div>
+    <div className={className}>
       <h3 className="w-48 border-b-4 border-[#1db954] border-opacity-25 pb-1 font-semibold">
         Your top {data.limit} tracks
       </h3>
 
-      <ul className="mt-3 ml-6 list-disc space-y-3">
+      <ul className="mt-3 space-y-3">
         {data.items &&
-          data.items.map(track => (
-            <li key={track.id}>
-              <div className="font-medium">{track.name}</div>
-              <div className="text-sm text-gray-600">
-                {track.artists[0].name}
-              </div>
-            </li>
-          ))}
+          data.items.map(track => <TrackItem track={track} key={track.id} />)}
       </ul>
     </div>
   )

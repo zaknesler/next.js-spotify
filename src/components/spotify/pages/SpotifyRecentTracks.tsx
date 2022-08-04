@@ -1,9 +1,10 @@
 import React from 'react'
 import useSWR from 'swr'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
-import { ENDPOINTS } from '../../utils/api/spotify/constants'
-import type { Track } from '../../utils/api/spotify/types'
-import { spotifyFetcher } from '../../utils/api/spotify/utils'
+import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
+import { ENDPOINTS } from '../../../utils/api/spotify/constants'
+import type { Track } from '../../../utils/api/spotify/types'
+import { spotifyFetcher } from '../../../utils/api/spotify/utils'
+import { TrackItem } from '../TrackItem'
 
 type SpotifyRecentTracksResponse = {
   items: {
@@ -16,7 +17,9 @@ type SpotifyRecentTracksResponse = {
   next: string
 }
 
-export const SpotifyRecentTracks: React.FC<{}> = () => {
+export const SpotifyRecentTracks: React.FC<{ className?: string }> = ({
+  className,
+}) => {
   const { auth } = useSpotifyAuthContext()
   const { data, error } = useSWR<SpotifyRecentTracksResponse>(
     auth?.isAuthenticated ? [ENDPOINTS.RECENTLY_PLAYED, auth] : null,
@@ -28,22 +31,17 @@ export const SpotifyRecentTracks: React.FC<{}> = () => {
   if (error) return <div>Failed to load!</div>
 
   return (
-    <div>
+    <div className={className}>
       <h3 className="w-48 border-b-4 border-[#1db954] border-opacity-25 pb-1 font-semibold">
         Recent tracks
       </h3>
 
-      <ul className="mt-3 ml-6 list-disc space-y-3">
+      <div className="mt-3 space-y-3">
         {data.items &&
-          data.items.map((item, iter) => (
-            <li key={iter}>
-              <div className="font-medium">{item.track.name}</div>
-              <div className="text-sm text-gray-600">
-                {item.track.artists[0].name}
-              </div>
-            </li>
+          data.items.map(item => (
+            <TrackItem track={item.track} key={item.track.id} />
           ))}
-      </ul>
+      </div>
     </div>
   )
 }

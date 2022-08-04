@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
-import { SpotifyLogo } from '../../assets/icons/spotify'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
+import { SpotifyLogo } from '../../../assets/icons/spotify'
+import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
 
 export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   className,

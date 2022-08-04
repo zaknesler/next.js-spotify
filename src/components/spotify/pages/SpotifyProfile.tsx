@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
+import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
 
 export const SpotifyProfile: React.FC<{}> = () => {
   const { user } = useSpotifyAuthContext()

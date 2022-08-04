@@ -1,9 +1,9 @@
 import React from 'react'
 import useSWR from 'swr'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
-import { ENDPOINTS } from '../../utils/api/spotify/constants'
-import type { Track } from '../../utils/api/spotify/types'
-import { spotifyFetcher } from '../../utils/api/spotify/utils'
+import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
+import { ENDPOINTS } from '../../../utils/api/spotify/constants'
+import type { Track } from '../../../utils/api/spotify/types'
+import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 
 export type SpotifyCurrentlyPlayingResponse = {
   timestamp: number
