@@ -18,25 +18,27 @@ export default function Index() {
       </Head>
 
       <main className="p-8 sm:p-12">
-        {auth?.isAuthenticated ? (
-          <>
-            <SpotifyLogoutButton />
-            <div className="mt-2 space-y-6">
-              <SpotifyProfile />
-              <SpotifyCurrentlyPlaying />
-              <div className="flex gap-6">
-                <SpotifyRecentTracks className="max-w-lg" />
-                <SpotifyTopTracks className="max-w-lg" />
-              </div>
-            </div>
-          </>
-        ) : (
+        {!auth.isAuthenticated ? (
           <>
             <h3 className="text-xl font-semibold">Welcome.</h3>
             <p className="mt-2 max-w-sm leading-relaxed text-gray-600">
               Sign in with your Spotify account to continue.
             </p>
             <SpotifyLoginButton className="mt-6" />
+          </>
+        ) : (
+          <>
+            <SpotifyLogoutButton />
+
+            <div className="mt-2 space-y-6">
+              <SpotifyProfile />
+              <SpotifyCurrentlyPlaying />
+
+              <div className="flex gap-6">
+                <SpotifyRecentTracks className="max-w-lg" />
+                <SpotifyTopTracks className="max-w-lg" />
+              </div>
+            </div>
           </>
         )}
       </main>

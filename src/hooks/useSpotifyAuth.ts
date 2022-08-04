@@ -18,68 +18,65 @@ import { useCookies } from './useCookies'
 
 export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
+const defaultAuthData: SpotifyAuthData = {
+  isAuthenticated: false,
+  session: null,
+  user: null,
+}
+
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
   const cookies = useCookies<SpotifyAuthCookies>()
-  const [auth, setAuth] = useState<SpotifyAuthData>({
-    isAuthenticated: false,
-    session: null,
-    user: null,
-  })
+  const [auth, setAuth] = useState<SpotifyAuthData>(defaultAuthData)
 
-  const { data: user, mutate } = useSWR<ProfileResponse>(
+  const { data: user } = useSWR<ProfileResponse>(
     auth.isAuthenticated ? [ENDPOINTS.PROFILE, auth] : null,
     spotifyFetcher,
   )
 
-  const invalidate = () =>
-    setAuth({
-      isAuthenticated: false,
-      session: null,
-      user: null,
-    })
+  const invalidate = () => setAuth(defaultAuthData)
 
   const logout = async () =>
     await fetch('/api/auth/spotify/logout', { method: 'POST' })
-      .catch(console.log)
       .then(invalidate)
-      .then(() => mutate())
-
-  const checkAuth = useCallback(() => {
-    if (auth.session) return
-
-    const isAuthenticated = Boolean(cookies?.spotify_access_token)
-    const session = isAuthenticated
-      ? {
-          access_token: cookies.spotify_access_token,
-          expires_at: new Date(cookies.spotify_expires_at * 1000),
-          scopes: cookies.spotify_original_auth_scope.split(' '),
-          state: cookies.spotify_state,
-        }
-      : null
-
-    setAuth({ isAuthenticated, session: session, user: user ?? null })
-  }, [auth.session, cookies, user])
+      .catch(console.error)
 
   useEffect(() => {
+    if (auth.session || user) return
+
+    const isAuthenticated = Boolean(cookies?.spotify_access_token)
+    setAuth({
+      isAuthenticated,
+      session: isAuthenticated
+        ? {
+            access_token: cookies.spotify_access_token,
+            expires_at: new Date(cookies.spotify_expires_at * 1000),
+            scopes: cookies.spotify_original_auth_scope.split(' '),
+            state: cookies.spotify_state,
+          }
+        : null,
+      user: user ?? null,
+    })
+  }, [cookies, auth.session, user])
+
+  useEffect(() => {
+    if (!auth) return
+
     if (
       auth.isAuthenticated &&
       hasAccessTokenExpired(auth.session.expires_at)
     ) {
-      router.replace('/api/auth/spotify/reauth')
+      router.push('/api/auth/spotify/reauth')
       return
     }
 
     if (auth.isAuthenticated && haveAuthScopesChanged(auth.session.scopes)) {
-      router.replace('/api/auth/spotify/login')
+      router.push('/api/auth/spotify/login')
       return
     }
   }, [auth, router])
 
-  useEffect(() => {
-    if (!cookies) return
-    checkAuth()
-  }, [cookies, checkAuth])
+  useEffect(() => console.log('useSpotifyAuth', auth))
 
   return { auth, user, invalidate, logout }
 }

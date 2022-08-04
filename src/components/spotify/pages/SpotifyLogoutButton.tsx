@@ -6,7 +6,7 @@ export const SpotifyLogoutButton: React.FC<{ className?: string }> = ({
 }) => {
   const { auth, logout } = useSpotifyAuthContext()
 
-  if (!auth?.isAuthenticated) return
+  if (!auth.isAuthenticated) return
 
   return (
     <div className={className}>
