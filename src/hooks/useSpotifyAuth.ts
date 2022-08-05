@@ -31,7 +31,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
   const invalidate = () => setAuth(null)
 
   const logout = async () =>
-    fetch('/api/auth/spotify/logout', { method: 'POST' }).catch(console.error)
+    fetch('/api/auth/spotify/logout', { method: 'POST' })
 
   useEffect(() => {
     if (auth?.session || user) return
@@ -70,5 +70,5 @@ export const useSpotifyAuth = (): SpotifyContextData => {
 
   useEffect(() => console.log('useSpotifyAuth', auth))
 
-  return { auth, user, invalidate, logout }
+  return { auth, setAuth, user, invalidate, logout }
 }

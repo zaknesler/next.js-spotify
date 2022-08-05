@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export type SpotifyAuthCookies = {
   spotify_access_token?: string
   spotify_refresh_token?: string
@@ -9,6 +11,7 @@ export type SpotifyAuthCookies = {
 export type SpotifyContextData = {
   auth: SpotifyAuthData
   user: ProfileResponse
+  setAuth: Dispatch<SetStateAction<SpotifyAuthData>>
   invalidate: () => void
   logout: () => Promise<Response>
 }
