@@ -17,11 +17,11 @@ export default function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-8 sm:p-12">
+      <main className="p-8 md:p-12">
         {!auth.isAuthenticated ? (
           <>
             <h3 className="text-xl font-semibold">Welcome.</h3>
-            <p className="mt-2 max-w-sm leading-relaxed text-gray-600">
+            <p className="mt-2 leading-relaxed text-gray-600 md:max-w-sm">
               Sign in with your Spotify account to continue.
             </p>
             <SpotifyLoginButton className="mt-6" />
@@ -32,11 +32,11 @@ export default function Index() {
 
             <div className="mt-2 space-y-6">
               <SpotifyProfile />
-              <SpotifyCurrentlyPlaying />
+              <SpotifyCurrentlyPlaying className="md:max-w-sm" />
 
-              <div className="flex gap-6">
-                <SpotifyRecentTracks className="max-w-lg" />
-                <SpotifyTopTracks className="max-w-lg" />
+              <div className="flex flex-col gap-6 md:flex-row">
+                <SpotifyRecentTracks className="flex-1 md:max-w-sm" />
+                <SpotifyTopTracks className="flex-1 md:max-w-sm" />
               </div>
             </div>
           </>

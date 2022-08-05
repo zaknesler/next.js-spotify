@@ -29,7 +29,7 @@ export const SpotifyTopTracks: React.FC<{ className?: string }> = ({
 
   return (
     <div className={className}>
-      <h3 className="w-48 border-b-4 border-[#1db954] border-opacity-25 pb-1 font-semibold">
+      <h3 className="w-full border-b-4 border-[#1db954] border-opacity-25 pb-1 font-semibold sm:w-48">
         Your top {data.limit} tracks
       </h3>
 
