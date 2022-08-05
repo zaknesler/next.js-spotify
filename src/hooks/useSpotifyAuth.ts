@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { ENDPOINTS } from '../utils/api/spotify/constants'
 import {
@@ -18,31 +18,23 @@ import { useCookies } from './useCookies'
 
 export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
-const defaultAuthData: SpotifyAuthData = {
-  isAuthenticated: false,
-  session: null,
-  user: null,
-}
-
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
   const cookies = useCookies<SpotifyAuthCookies>()
-  const [auth, setAuth] = useState<SpotifyAuthData>(defaultAuthData)
+  const [auth, setAuth] = useState<SpotifyAuthData>(null)
 
   const { data: user } = useSWR<ProfileResponse>(
-    auth.isAuthenticated ? [ENDPOINTS.PROFILE, auth] : null,
+    auth?.isAuthenticated ? [ENDPOINTS.PROFILE, auth] : null,
     spotifyFetcher,
   )
 
-  const invalidate = () => setAuth(defaultAuthData)
+  const invalidate = () => setAuth(null)
 
   const logout = async () =>
-    await fetch('/api/auth/spotify/logout', { method: 'POST' })
-      .then(invalidate)
-      .catch(console.error)
+    fetch('/api/auth/spotify/logout', { method: 'POST' }).catch(console.error)
 
   useEffect(() => {
-    if (auth.session || user) return
+    if (auth?.session || user) return
 
     const isAuthenticated = Boolean(cookies?.spotify_access_token)
     setAuth({
@@ -57,7 +49,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
         : null,
       user: user ?? null,
     })
-  }, [cookies, auth.session, user])
+  }, [cookies, auth?.session, user])
 
   useEffect(() => {
     if (!auth) return

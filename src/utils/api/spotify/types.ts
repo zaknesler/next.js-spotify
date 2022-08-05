@@ -10,7 +10,7 @@ export type SpotifyContextData = {
   auth: SpotifyAuthData
   user: ProfileResponse
   invalidate: () => void
-  logout: () => void
+  logout: () => Promise<Response>
 }
 
 export type SpotifyAuthData = {

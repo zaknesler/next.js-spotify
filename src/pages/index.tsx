@@ -18,7 +18,7 @@ export default function Index() {
       </Head>
 
       <main className="p-8 md:p-12">
-        {!auth.isAuthenticated ? (
+        {auth && !auth.isAuthenticated && (
           <>
             <h3 className="text-xl font-semibold">Welcome.</h3>
             <p className="mt-2 leading-relaxed text-gray-600 md:max-w-sm">
@@ -26,7 +26,9 @@ export default function Index() {
             </p>
             <SpotifyLoginButton className="mt-6" />
           </>
-        ) : (
+        )}
+
+        {auth && auth.isAuthenticated && (
           <>
             <SpotifyLogoutButton />
 

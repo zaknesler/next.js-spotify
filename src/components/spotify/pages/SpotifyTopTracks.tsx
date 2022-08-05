@@ -23,7 +23,7 @@ export const SpotifyTopTracks: React.FC<{ className?: string }> = ({
     spotifyFetcher,
   )
 
-  if (!auth.isAuthenticated) return
+  if (!auth?.isAuthenticated) return
   if (!data) return <div>Loading...</div>
   if (error) return <div>Failed to load!</div>
 
