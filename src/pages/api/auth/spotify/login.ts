@@ -8,7 +8,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     scope: AUTH_SCOPES.join(' '),
     state: '1234567812345678', // @todo generate a random string on session start
     client_id: process.env.SPOTIFY_CLIENT_ID,
-    redirect_uri: process.env.SPOTIFY_REDIRECT_URI || req.headers.host,
+    redirect_uri:
+      process.env.SPOTIFY_REDIRECT_URI ||
+      `https://${req.headers.host}/api/auth/spotify/callback`,
   })
 
   res.redirect(`${AUTH_URL}?${params}`)
