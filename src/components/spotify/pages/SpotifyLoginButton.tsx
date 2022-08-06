@@ -6,9 +6,9 @@ import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
 export const SpotifyLoginButton: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const { auth } = useSpotifyAuthContext()
+  const { isAuthed } = useSpotifyAuthContext()
 
-  if (auth?.isAuthenticated) return
+  if (isAuthed()) return
 
   return (
     <div className={className}>

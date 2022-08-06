@@ -1,11 +1,16 @@
 import { serialize } from 'cookie'
+import dayjs from 'dayjs'
 import type { CookieSerializeOptions } from 'next/dist/server/web/types'
 
 export const formatCookie = (
   name: string,
   value: string,
   options: CookieSerializeOptions = {},
-): string | null => {
-  if (!value) return null
-  return serialize(name, value, { path: '/', ...options })
-}
+): string | null =>
+  value
+    ? serialize(name, value, {
+        path: '/',
+        expires: dayjs().add(1, 'year').toDate(),
+        ...options,
+      })
+    : null

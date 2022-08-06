@@ -11,17 +11,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   const auth = useSpotifyAuth()
 
   return (
-    <>
+    <SpotifyAuthContext.Provider value={auth}>
       <Head>
         <title>Spotify</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <SWRConfig value={{ fetcher }}>
-        <SpotifyAuthContext.Provider value={auth}>
-          <Component {...pageProps} />
-        </SpotifyAuthContext.Provider>
+        <Component {...pageProps} />
       </SWRConfig>
-    </>
+    </SpotifyAuthContext.Provider>
   )
 }
 

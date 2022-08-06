@@ -17,13 +17,13 @@ export type SpotifyCurrentlyPlayingResponse = {
 export const SpotifyCurrentlyPlaying: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const { auth } = useSpotifyAuthContext()
+  const { auth, isAuthed } = useSpotifyAuthContext()
   const { data, error } = useSWR<SpotifyCurrentlyPlayingResponse>(
-    auth?.isAuthenticated ? [ENDPOINTS.CURRENTLY_PLAYING, auth] : null,
+    isAuthed() ? [ENDPOINTS.CURRENTLY_PLAYING, auth] : null,
     spotifyFetcher,
   )
 
-  if (!auth?.isAuthenticated || !data) return
+  if (!isAuthed() || !data) return
   if (error) return <div>Failed to load!</div>
 
   return (

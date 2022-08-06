@@ -10,16 +10,17 @@ export type SpotifyAuthCookies = {
 
 export type SpotifyContextData = {
   auth: SpotifyAuthData
-  user: ProfileResponse
+  user: SpotifyUserData
+  isAuthed: () => boolean
   setAuth: Dispatch<SetStateAction<SpotifyAuthData>>
   invalidate: () => void
-  logout: () => Promise<Response>
+  logout: () => void
 }
 
 export type SpotifyAuthData = {
   isAuthenticated: boolean
   session?: SpotifyAuthSession
-  user: ProfileResponse
+  user?: SpotifyUserData
 }
 
 export type SpotifyAuthSession = {
@@ -28,6 +29,8 @@ export type SpotifyAuthSession = {
   scopes: string[]
   state: string
 }
+
+export type SpotifyUserData = ProfileResponse
 
 export type ProfileResponse = {
   id: string

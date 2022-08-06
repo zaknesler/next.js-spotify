@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { NextApiRequest } from 'next'
 import { formatCookie } from '../..'
 import { AUTH_SCOPES, COOKIE_KEYS } from './constants'
@@ -42,12 +43,12 @@ export const formatAuthCookies = (data: {
     formatCookie(COOKIE_KEYS.STATE, data.state),
     formatCookie(
       COOKIE_KEYS.EXPIRES_AT,
-      String(Math.floor(new Date().valueOf() / 1000) + data.expires_in),
+      dayjs().add(data.expires_in, 'second').toISOString(),
     ),
   ].filter(Boolean)
 
-export const hasAccessTokenExpired = token =>
-  new Date().valueOf() >= token.valueOf()
+export const hasAccessTokenExpired = expires_at =>
+  dayjs().isAfter(dayjs(expires_at))
 
 export const haveAuthScopesChanged = (scopes: string[]) =>
   !AUTH_SCOPES.every(scope => scopes.includes(scope))

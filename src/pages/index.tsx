@@ -5,10 +5,10 @@ import { SpotifyLogoutButton } from '../components/spotify/pages/SpotifyLogoutBu
 import { SpotifyProfile } from '../components/spotify/pages/SpotifyProfile'
 import { SpotifyRecentTracks } from '../components/spotify/pages/SpotifyRecentTracks'
 import { SpotifyTopTracks } from '../components/spotify/pages/SpotifyTopTracks'
-import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
+import { useSpotifyAuthContext } from '../hooks/useSpotifyAuth'
 
 export default function Index() {
-  const { auth } = useSpotifyAuth()
+  const { isAuthed } = useSpotifyAuthContext()
 
   return (
     <>
@@ -18,17 +18,7 @@ export default function Index() {
       </Head>
 
       <main className="p-8 md:p-12">
-        {auth && !auth.isAuthenticated && (
-          <>
-            <h3 className="text-xl font-semibold">Welcome.</h3>
-            <p className="mt-2 leading-relaxed text-gray-600 md:max-w-sm">
-              Sign in with your Spotify account to continue.
-            </p>
-            <SpotifyLoginButton className="mt-6" />
-          </>
-        )}
-
-        {auth && auth.isAuthenticated && (
+        {isAuthed() ? (
           <>
             <SpotifyLogoutButton />
 
@@ -41,6 +31,14 @@ export default function Index() {
                 <SpotifyTopTracks className="flex-grow md:max-w-sm" />
               </div>
             </div>
+          </>
+        ) : (
+          <>
+            <h3 className="text-xl font-semibold">Welcome.</h3>
+            <p className="mt-2 leading-relaxed text-gray-600 md:max-w-sm">
+              Sign in with your Spotify account to continue.
+            </p>
+            <SpotifyLoginButton className="mt-6" />
           </>
         )}
       </main>
