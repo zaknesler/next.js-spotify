@@ -20,13 +20,13 @@ type SpotifyRecentTracksResponse = {
 export const SpotifyRecentTracks: React.FC<{ className?: string }> = ({
   className,
 }) => {
-  const { auth } = useSpotifyAuthContext()
+  const { auth, isAuthed } = useSpotifyAuthContext()
   const { data, error } = useSWR<SpotifyRecentTracksResponse>(
-    auth?.isAuthenticated ? [ENDPOINTS.RECENTLY_PLAYED, auth] : null,
+    isAuthed() ? [ENDPOINTS.ME.RECENTLY_PLAYED, auth] : null,
     spotifyFetcher,
   )
 
-  if (!auth?.isAuthenticated) return
+  if (!isAuthed()) return
   if (!data) return <div>Loading...</div>
   if (error) return <div>Failed to load!</div>
 

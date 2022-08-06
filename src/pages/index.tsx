@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { SpotifyCurrentlyPlaying } from '../components/spotify/pages/SpotifyCurrentlyPlaying'
+import { SpotifyListPlaylists } from '../components/spotify/pages/SpotifyListPlaylists'
 import { SpotifyLoginButton } from '../components/spotify/pages/SpotifyLoginButton'
 import { SpotifyLogoutButton } from '../components/spotify/pages/SpotifyLogoutButton'
 import { SpotifyProfile } from '../components/spotify/pages/SpotifyProfile'
@@ -29,6 +30,7 @@ export default function Index() {
               <div className="flex flex-col gap-6 md:flex-row">
                 <SpotifyRecentTracks className="flex-grow md:max-w-sm" />
                 <SpotifyTopTracks className="flex-grow md:max-w-sm" />
+                <SpotifyListPlaylists className="flex-grow md:max-w-sm" />
               </div>
             </div>
           </>

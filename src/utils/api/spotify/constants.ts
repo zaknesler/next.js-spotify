@@ -26,8 +26,13 @@ export const COOKIE_KEYS = {
 }
 
 export const ENDPOINTS = {
-  PROFILE: `${API_BASE_URL}/me`,
-  TOP_TRACKS: `${API_BASE_URL}/me/top/tracks`,
-  CURRENTLY_PLAYING: `${API_BASE_URL}/me/player/currently-playing`,
-  RECENTLY_PLAYED: `${API_BASE_URL}/me/player/recently-played`,
+  ME: {
+    PROFILE: `${API_BASE_URL}/me`,
+    TOP_TRACKS: `${API_BASE_URL}/me/top/tracks`,
+    CURRENTLY_PLAYING: `${API_BASE_URL}/me/player/currently-playing`,
+    RECENTLY_PLAYED: `${API_BASE_URL}/me/player/recently-played`,
+  },
+  USERS: {
+    PLAYLISTS: (id: string) => `${API_BASE_URL}/users/${id}/playlists`,
+  },
 }

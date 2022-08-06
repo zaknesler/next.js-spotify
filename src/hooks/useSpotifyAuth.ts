@@ -24,11 +24,6 @@ export const useSpotifyAuth = (): SpotifyContextData => {
   const { cookies, clearCookies } = useCookies<SpotifyAuthCookies>()
   const [auth, setAuth] = useState<SpotifyAuthData>(null)
 
-  const { data: user } = useSWR<SpotifyUserData>(
-    auth?.isAuthenticated ? [ENDPOINTS.PROFILE, auth] : null,
-    spotifyFetcher,
-  )
-
   const isAuthed = () => Boolean(auth?.isAuthenticated && auth?.session)
 
   const invalidate = () => {
@@ -38,6 +33,11 @@ export const useSpotifyAuth = (): SpotifyContextData => {
 
   const logout = () =>
     fetch('/api/auth/spotify/logout', { method: 'POST' }).then(invalidate)
+
+  const { data: user } = useSWR<SpotifyUserData>(
+    isAuthed() ? [ENDPOINTS.ME.PROFILE, auth] : null,
+    spotifyFetcher,
+  )
 
   useEffect(() => {
     if (auth?.session || user) return

@@ -34,9 +34,14 @@ export type SpotifyUserData = ProfileResponse
 
 export type ProfileResponse = {
   id: string
-  email: string
   display_name: string
+  email: string
+  country: string
+  href: string
+  images: Image[]
   product: 'premium' | 'free' | 'open'
+  type: string
+  uri: string
 }
 
 export type Image = {
@@ -82,6 +87,22 @@ export type Track = {
   popularity: number
   preview_url: string
   track_number: number
+  type: string
+  uri: string
+}
+
+export type Playlist = {
+  collaborative: boolean
+  description: string
+  href: string
+  id: string
+  images: Image[]
+  name: string
+  owner: SpotifyUserData
+  primary_color: string
+  public: boolean
+  snapshot_id: string
+  tracks: Track[]
   type: string
   uri: string
 }
