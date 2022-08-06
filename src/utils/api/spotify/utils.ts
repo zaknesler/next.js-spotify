@@ -1,3 +1,4 @@
+import { NextApiRequest } from 'next'
 import { formatCookie } from '../..'
 import { AUTH_SCOPES, COOKIE_KEYS } from './constants'
 import type { SpotifyAuthData } from './types'
@@ -15,6 +16,15 @@ export const spotifyFetcher = (
     },
   }).then(res => res.json())
 }
+
+export const getBase64AuthString = () =>
+  Buffer.from(
+    `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`,
+  ).toString('base64')
+
+export const getRedirectURL = (req: NextApiRequest) =>
+  process.env.SPOTIFY_REDIRECT_URI ||
+  `https://${req.headers.host}/api/auth/spotify/callback`
 
 export const formatAuthCookies = (data: {
   access_token?: string
