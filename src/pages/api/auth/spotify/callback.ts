@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ACCESS_TOKEN_URL } from '../../../../utils/api/spotify/constants'
-import { formatAuthCookies } from '../../../../utils/api/spotify/utils'
+import {
+  formatAuthCookies,
+  getBase64AuthString,
+  getRedirectURL,
+} from '../../../../utils/api/spotify/utils'
 
 type AuthQueryParams = {
   state: string
@@ -22,16 +26,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (error) return res.status(400).json({ error })
   if (!code) return res.status(400).json({ error: 'Authorization failed.' })
 
-  const authString = `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
   const data: SpotifyAccessTokenResponse = await fetch(ACCESS_TOKEN_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Basic ' + Buffer.from(authString).toString('base64'),
+      Authorization: 'Basic ' + getBase64AuthString(),
     },
     body: new URLSearchParams({
       code,
-      redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+      redirect_uri: getRedirectURL(req),
       grant_type: 'authorization_code',
     }),
   })

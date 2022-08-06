@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export type SpotifyAuthCookies = {
   spotify_access_token?: string
   spotify_refresh_token?: string
@@ -8,19 +10,33 @@ export type SpotifyAuthCookies = {
 
 export type SpotifyContextData = {
   auth: SpotifyAuthData
+  user: SpotifyUserData
+  isAuthed: () => boolean
+  setAuth: Dispatch<SetStateAction<SpotifyAuthData>>
   invalidate: () => void
   logout: () => void
-  refresh: () => void
 }
 
 export type SpotifyAuthData = {
   isAuthenticated: boolean
-  user: null | {
-    access_token: string
-    expires_at: Date
-    scopes: Array<string>
-    state: string
-  }
+  session?: SpotifyAuthSession
+  user?: SpotifyUserData
+}
+
+export type SpotifyAuthSession = {
+  access_token: string
+  expires_at: Date
+  scopes: string[]
+  state: string
+}
+
+export type SpotifyUserData = ProfileResponse
+
+export type ProfileResponse = {
+  id: string
+  email: string
+  display_name: string
+  product: 'premium' | 'free' | 'open'
 }
 
 export type Image = {
@@ -29,22 +45,43 @@ export type Image = {
   height: number
 }
 
-export type Artist = {
-  id: string
-  name: string
-  images: Image[]
-}
-
 export type Album = {
   id: string
   name: string
+  album_type: string
   artists: Artist[]
+  available_markets: string[]
+  href: string
   images: Image[]
+  release_date: Date
+  release_date_precision: string
+  total_tracks: number
+  type: string
+  uri: string
+}
+
+export type Artist = {
+  id: string
+  name: string
+  type: string
+  href: string
+  uri: string
 }
 
 export type Track = {
   id: string
   name: string
-  artists: Artist[]
   album: Album
+  artists: Artist[]
+  available_markets: string[]
+  disc_number: number
+  duration_ms: number
+  explicit: boolean
+  href: string
+  is_local: boolean
+  popularity: number
+  preview_url: string
+  track_number: number
+  type: string
+  uri: string
 }

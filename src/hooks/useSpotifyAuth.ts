@@ -1,14 +1,18 @@
+import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { debug } from '../utils/logger'
+import { useContext, useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { ENDPOINTS } from '../utils/api/spotify/constants'
 import {
   SpotifyAuthCookies,
   SpotifyAuthData,
   SpotifyContextData,
+  SpotifyUserData,
 } from '../utils/api/spotify/types'
 import {
   haveAuthScopesChanged,
-  isAccessTokenExpired,
+  hasAccessTokenExpired,
+  spotifyFetcher,
 } from '../utils/api/spotify/utils'
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
 import { useCookies } from './useCookies'
@@ -17,46 +21,58 @@ export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
-  const cookies = useCookies<SpotifyAuthCookies>()
+  const { cookies, clearCookies } = useCookies<SpotifyAuthCookies>()
   const [auth, setAuth] = useState<SpotifyAuthData>(null)
 
-  const invalidate = () => setAuth({ isAuthenticated: false, user: null })
+  const { data: user } = useSWR<SpotifyUserData>(
+    auth?.isAuthenticated ? [ENDPOINTS.PROFILE, auth] : null,
+    spotifyFetcher,
+  )
 
-  const logout = async () =>
-    await fetch('/api/auth/spotify/logout', { method: 'POST' })
-      .catch(console.log)
-      .then(invalidate)
+  const isAuthed = () => Boolean(auth?.isAuthenticated && auth?.session)
 
-  const refresh = useCallback(() => {
-    debug('refreshing access token!')
+  const invalidate = () => {
+    setAuth(null)
+    clearCookies()
+  }
 
-    // @todo make this an API call
-    router.push('/api/auth/spotify/reauth')
-  }, [router])
+  const logout = () =>
+    fetch('/api/auth/spotify/logout', { method: 'POST' }).then(invalidate)
 
   useEffect(() => {
-    if (!cookies) return
+    if (auth?.session || user) return
 
     const isAuthenticated = Boolean(cookies?.spotify_access_token)
-    const user = isAuthenticated
-      ? {
-          access_token: cookies.spotify_access_token,
-          expires_at: new Date(cookies.spotify_expires_at * 1000),
-          scopes: cookies.spotify_original_auth_scope.split(' '),
-          state: cookies.spotify_state,
-        }
-      : null
+    setAuth({
+      isAuthenticated,
+      session: isAuthenticated
+        ? {
+            access_token: cookies.spotify_access_token,
+            expires_at: dayjs(cookies.spotify_expires_at).toDate(),
+            scopes: cookies.spotify_original_auth_scope.split(' '),
+            state: cookies.spotify_state,
+          }
+        : null,
+      user: user ?? null,
+    })
+  }, [cookies, auth?.session, user])
 
-    if (isAuthenticated && isAccessTokenExpired(user.expires_at)) {
-      refresh()
+  useEffect(() => {
+    if (!auth) return
+
+    if (
+      auth.isAuthenticated &&
+      hasAccessTokenExpired(auth.session.expires_at)
+    ) {
+      router.push('/api/auth/spotify/reauth')
+      return
     }
 
-    if (isAuthenticated && haveAuthScopesChanged(user.scopes)) {
+    if (auth.isAuthenticated && haveAuthScopesChanged(auth.session.scopes)) {
       router.push('/api/auth/spotify/login')
+      return
     }
+  }, [auth, router])
 
-    setAuth({ isAuthenticated, user })
-  }, [cookies, router, refresh])
-
-  return { auth, invalidate, logout, refresh }
+  return { auth, setAuth, user, invalidate, logout, isAuthed }
 }
