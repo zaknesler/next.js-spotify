@@ -38,8 +38,8 @@ export const SpotifyRecentTracks: React.FC<{ className?: string }> = ({
 
       <div className="mt-3 space-y-3">
         {data.items &&
-          data.items.map(item => (
-            <TrackItem track={item.track} key={item.track.id} />
+          data.items.map((item, iter) => (
+            <TrackItem track={item.track} key={'recent-tracks.' + iter} />
           ))}
       </div>
     </div>

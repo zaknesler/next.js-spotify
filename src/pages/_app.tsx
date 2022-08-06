@@ -16,11 +16,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>Spotify</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <SpotifyAuthContext.Provider value={auth}>
-        <SWRConfig value={{ fetcher }}>
+      <SWRConfig value={{ fetcher }}>
+        <SpotifyAuthContext.Provider value={auth}>
           <Component {...pageProps} />
-        </SWRConfig>
-      </SpotifyAuthContext.Provider>
+        </SpotifyAuthContext.Provider>
+      </SWRConfig>
     </>
   )
 }

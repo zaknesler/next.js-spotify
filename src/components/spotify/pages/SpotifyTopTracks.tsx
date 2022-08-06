@@ -35,7 +35,9 @@ export const SpotifyTopTracks: React.FC<{ className?: string }> = ({
 
       <ul className="mt-3 space-y-3">
         {data.items &&
-          data.items.map(track => <TrackItem track={track} key={track.id} />)}
+          data.items.map((track, iter) => (
+            <TrackItem track={track} key={'top-tracks.' + iter} />
+          ))}
       </ul>
     </div>
   )

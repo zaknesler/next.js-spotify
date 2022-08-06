@@ -68,7 +68,5 @@ export const useSpotifyAuth = (): SpotifyContextData => {
     }
   }, [auth, router])
 
-  useEffect(() => console.log('useSpotifyAuth', auth))
-
   return { auth, setAuth, user, invalidate, logout }
 }
