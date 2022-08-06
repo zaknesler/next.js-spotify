@@ -1,7 +1,6 @@
 import 'tailwindcss/tailwind.css'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useEffect } from 'react'
 import { SWRConfig } from 'swr'
 import { useSpotifyAuth } from '../hooks/useSpotifyAuth'
 import { SpotifyAuthContext } from '../utils/contexts/SpotifyAuthContext'
