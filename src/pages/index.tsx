@@ -27,10 +27,10 @@ export default function Index() {
               <SpotifyProfile />
               <SpotifyCurrentlyPlaying className="md:max-w-sm" />
 
-              <div className="flex flex-col gap-6 md:flex-row">
-                <SpotifyRecentTracks className="flex-grow md:max-w-sm" />
-                <SpotifyTopTracks className="flex-grow md:max-w-sm" />
-                <SpotifyListPlaylists className="flex-grow md:max-w-sm" />
+              <div className="flex flex-col gap-6 md:flex-row md:flex-wrap">
+                <SpotifyRecentTracks className="flex-1 md:max-w-sm" />
+                <SpotifyTopTracks className="flex-1 md:max-w-sm" />
+                <SpotifyListPlaylists className="flex-1 md:max-w-sm" />
               </div>
             </div>
           </>
