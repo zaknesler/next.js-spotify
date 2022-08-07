@@ -12,7 +12,7 @@ export const TrackItem: React.FC<{ track: Track; className?: string }> = ({
   return (
     <div
       className={[
-        '-m-1.5 flex rounded-lg p-1.5 transition-colors hover:bg-gray-50',
+        '-m-1.5 flex rounded-lg p-1.5 transition-colors hover:bg-gray-100',
         className,
       ].join(' ')}
     >

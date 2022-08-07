@@ -34,7 +34,6 @@ export const Sidebar: React.FC<{ className?: string }> = ({ className }) => {
         <div>
           <LogoutButton />
           <Profile className="mt-2" />
-          <CurrentlyPlaying className="mt-6 md:max-w-sm" />
 
           <div className="my-6 h-1 w-1/2 bg-gray-200"></div>
 
@@ -49,7 +48,10 @@ export const Sidebar: React.FC<{ className?: string }> = ({ className }) => {
           </div>
         </div>
 
-        <PlaybackControls className="mt-6" />
+        <div className="mt-6">
+          <CurrentlyPlaying className="md:max-w-sm" />
+          <PlaybackControls className="mt-4" />
+        </div>
       </div>
     </div>
   )

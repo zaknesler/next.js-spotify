@@ -27,11 +27,7 @@ export const CurrentlyPlaying: React.FC<{ className?: string }> = ({
 
   return (
     <div className={className}>
-      <h3 className="w-full border-b-4 border-spotify-brand border-opacity-25 pb-1 font-semibold md:w-48">
-        Currently playing
-      </h3>
-
-      <TrackItem track={data.item} className="mt-3" />
+      <TrackItem track={data.item} />
     </div>
   )
 }
