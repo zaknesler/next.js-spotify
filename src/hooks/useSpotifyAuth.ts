@@ -36,7 +36,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
     fetch('/api/auth/spotify/logout', { method: 'POST' }).then(invalidate)
 
   const { data: user } = useSWR<SpotifyUserData>(
-    isAuthed() ? [ENDPOINTS.ME.PROFILE, auth] : null,
+    isAuthed() ? [ENDPOINTS.ME.PROFILE, { auth }] : null,
     spotifyFetcher,
   )
 

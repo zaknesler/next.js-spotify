@@ -19,8 +19,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SWRConfig value={{ fetcher }}>
-        <div className="flex flex-col gap-6 p-8 md:flex-row md:p-12">
-          <Sidebar className="top-0 w-full md:sticky md:max-w-xs" />
+        <div className="flex flex-col gap-8 p-8 md:flex-row md:gap-12 md:p-12">
+          <Sidebar className="top-0 left-0 right-0 w-full md:sticky md:max-w-xs" />
           <Component {...pageProps} />
         </div>
       </SWRConfig>

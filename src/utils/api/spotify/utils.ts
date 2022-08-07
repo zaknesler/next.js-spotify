@@ -1,21 +1,24 @@
 import dayjs from 'dayjs'
 import { NextApiRequest } from 'next'
 import { formatCookie } from '../..'
+import { error } from '../../logger'
 import { AUTH_SCOPES, COOKIE_KEYS } from './constants'
 import type { SpotifyAuthData } from './types'
 
 export const spotifyFetcher = (
   input: RequestInfo | URL,
-  init: SpotifyAuthData,
+  init: { auth: SpotifyAuthData } & RequestInit,
 ): Promise<Response> | any => {
-  if (!init.isAuthenticated) return null
+  if (!init.auth.isAuthenticated) return null
   return fetch(input, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${init.session.access_token}`,
+      Authorization: `Bearer ${init.auth.session.access_token}`,
     },
-  }).then(res => res.json())
+  })
+    .then(res => res.json())
+    .catch(error)
 }
 
 export const getBase64AuthString = () =>

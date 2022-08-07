@@ -22,7 +22,7 @@ export const RecentTracks: React.FC<{ className?: string }> = ({
 }) => {
   const { auth, isAuthed } = useSpotifyAuthContext()
   const { data, error } = useSWR<RecentTracksResponse>(
-    isAuthed() ? [ENDPOINTS.ME.RECENTLY_PLAYED, auth] : null,
+    isAuthed() ? [ENDPOINTS.ME.RECENTLY_PLAYED, { auth }] : null,
     spotifyFetcher,
   )
 

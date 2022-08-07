@@ -20,7 +20,7 @@ export const Playlists: React.FC<{ className?: string }> = ({ className }) => {
   const [offset, setOffset] = useState(0)
   const { data, error } = useSWR<PlaylistsResponse>(
     isAuthed() && !!user
-      ? [`${ENDPOINTS.USERS.PLAYLISTS(user.id)}?offset=${offset}`, auth]
+      ? [`${ENDPOINTS.USERS.PLAYLISTS(user.id)}?offset=${offset}`, { auth }]
       : null,
     spotifyFetcher,
   )

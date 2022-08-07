@@ -6,6 +6,7 @@ export const AUTH_SCOPES = [
   'playlist-read-collaborative',
   'playlist-read-private',
   'streaming',
+  'app-remote-control',
   'user-library-read',
   'user-modify-playback-state',
   'user-read-currently-playing',
@@ -34,5 +35,9 @@ export const ENDPOINTS = {
   },
   USERS: {
     PLAYLISTS: (id: string) => `${API_BASE_URL}/users/${id}/playlists`,
+  },
+  CONTROLS: {
+    RESUME: `${API_BASE_URL}/me/player/play`,
+    PAUSE: `${API_BASE_URL}/me/player/pause`,
   },
 }
