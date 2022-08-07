@@ -34,7 +34,8 @@ export const ENDPOINTS = {
   USERS: {
     PLAYLISTS: (id: string) => `${API_BASE_URL}/users/${id}/playlists`,
   },
-  CONTROLS: {
+  PLAYER: {
+    STATE: `${API_BASE_URL}/me/player`,
     RESUME: `${API_BASE_URL}/me/player/play`,
     PAUSE: `${API_BASE_URL}/me/player/pause`,
   },
