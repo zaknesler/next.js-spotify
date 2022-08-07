@@ -3,6 +3,9 @@ import { AUTH_SCOPES, AUTH_URL } from '../../../../utils/api/spotify/constants'
 import { getRedirectURL } from '../../../../utils/api/spotify/utils'
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method !== 'GET')
+    return res.status(405).json({ error: 'Method not allowed' })
+
   const params = new URLSearchParams({
     response_type: 'code',
     scope: AUTH_SCOPES.join(' '),

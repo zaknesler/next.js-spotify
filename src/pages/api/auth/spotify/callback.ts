@@ -23,6 +23,10 @@ type SpotifyAccessTokenResponse = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { state, code, error } = req.query as AuthQueryParams
 
+  if (!state || !code)
+    return res.status(400).json({ error: 'Missing query params' })
+  if (req.method !== 'GET')
+    return res.status(405).json({ error: 'Method not allowed' })
   if (error) return res.status(400).json({ error })
   if (!code) return res.status(400).json({ error: 'Authorization failed.' })
 
