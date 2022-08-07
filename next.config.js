@@ -8,6 +8,7 @@ const nextConfig = {
   },
 }
 
+/** @type {import('@sentry/nextjs').SentryWebpackPluginOptions} */
 const sentryWebpackPluginOptions = {
   silent: true,
 }
