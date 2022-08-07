@@ -3,9 +3,9 @@ import React from 'react'
 import { useSpotifyAuthContext } from '../hooks/useSpotifyAuth'
 import { LoginButton } from './spotify/LoginButton'
 import { LogoutButton } from './spotify/LogoutButton'
-import { PlaybackControls } from './spotify/PlaybackControls'
 import { Profile } from './spotify/Profile'
 import { CurrentlyPlaying } from './spotify/views/CurrentlyPlaying'
+import { PlaybackControls } from './spotify/views/PlaybackControls'
 
 export const Sidebar: React.FC<{ className?: string }> = ({ className }) => {
   const { isAuthed } = useSpotifyAuthContext()

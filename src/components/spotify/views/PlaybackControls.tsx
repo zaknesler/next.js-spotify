@@ -1,10 +1,10 @@
 import { PauseIcon, PlayIcon } from '@heroicons/react/solid'
 import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
-import { ENDPOINTS } from '../../utils/api/spotify/constants'
-import type { Context, Device, Track } from '../../utils/api/spotify/types'
-import { spotifyFetcher } from '../../utils/api/spotify/utils'
+import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
+import { ENDPOINTS } from '../../../utils/api/spotify/constants'
+import type { Context, Device, Track } from '../../../utils/api/spotify/types'
+import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 
 export type PlaybackStateResponse = {
   device: Device
