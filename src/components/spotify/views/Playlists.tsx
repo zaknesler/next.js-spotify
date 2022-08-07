@@ -5,7 +5,7 @@ import { ENDPOINTS } from '../../../utils/api/spotify/constants'
 import type { Playlist } from '../../../utils/api/spotify/types'
 import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 
-type PlaylistsResponse = {
+export type PlaylistsResponse = {
   items: Playlist[]
   limit: number
   offset: number

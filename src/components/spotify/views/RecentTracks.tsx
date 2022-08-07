@@ -6,7 +6,7 @@ import type { Track } from '../../../utils/api/spotify/types'
 import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 import { TrackItem } from '../TrackItem'
 
-type RecentTracksResponse = {
+export type RecentTracksResponse = {
   items: {
     track: Track
     played_at: Date
