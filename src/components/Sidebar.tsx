@@ -16,8 +16,7 @@ export const Sidebar: React.FC<{ className?: string }> = ({ className }) => {
     { label: 'Playlists', url: '/stats/playlists' },
   ]
 
-  if (!isAuthed()) {
-    console.log('hi')
+  if (!isAuthed())
     return (
       <div className={className}>
         <h3 className="text-xl font-semibold">Welcome.</h3>
@@ -27,7 +26,6 @@ export const Sidebar: React.FC<{ className?: string }> = ({ className }) => {
         <LoginButton className="mt-6" />
       </div>
     )
-  }
 
   return (
     <div className={className}>
