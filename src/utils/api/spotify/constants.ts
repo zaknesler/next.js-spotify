@@ -5,8 +5,6 @@ export const API_BASE_URL = 'https://api.spotify.com/v1'
 export const AUTH_SCOPES = [
   'playlist-read-collaborative',
   'playlist-read-private',
-  'streaming',
-  'app-remote-control',
   'user-library-read',
   'user-modify-playback-state',
   'user-read-currently-playing',

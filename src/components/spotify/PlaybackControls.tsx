@@ -1,3 +1,4 @@
+import { PauseIcon, PlayIcon } from '@heroicons/react/solid'
 import React from 'react'
 import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 import { ENDPOINTS } from '../../utils/api/spotify/constants'
@@ -26,13 +27,16 @@ export const PlaybackControls: React.FC<{ className?: string }> = ({
 
   return (
     <div
-      className={['rounded-md bg-black p-3 text-white', className].join(' ')}
+      className={[
+        'flex items-center justify-center gap-3 rounded-md bg-black p-4 text-lg text-white',
+        className,
+      ].join(' ')}
     >
-      <button onClick={resume} className="block">
-        Play
+      <button onClick={resume} className="appearance-none">
+        <PlayIcon className="h-10 w-10" />
       </button>
-      <button onClick={pause} className="block">
-        Pause
+      <button onClick={pause} className="appearance-none">
+        <PauseIcon className="h-10 w-10" />
       </button>
     </div>
   )

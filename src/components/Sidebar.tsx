@@ -30,21 +30,23 @@ export const Sidebar: React.FC<{ className?: string }> = ({ className }) => {
 
   return (
     <div className={className}>
-      <div className="sticky top-8 left-0 right-0 md:top-12">
-        <LogoutButton />
-        <Profile className="mt-2" />
-        <CurrentlyPlaying className="mt-6 md:max-w-sm" />
+      <div className="sticky top-8 left-0 right-0 flex h-full flex-col justify-between">
+        <div>
+          <LogoutButton />
+          <Profile className="mt-2" />
+          <CurrentlyPlaying className="mt-6 md:max-w-sm" />
 
-        <div className="my-6 h-1 w-1/2 bg-gray-200"></div>
+          <div className="my-6 h-1 w-1/2 bg-gray-200"></div>
 
-        <div className="space-y-2 text-lg font-semibold text-black">
-          {links.map((link, iter) => (
-            <div key={iter}>
-              <Link href={link.url}>
-                <a className="hover:text-spotify-text">{link.label}</a>
-              </Link>
-            </div>
-          ))}
+          <div className="space-y-2 text-lg font-semibold text-black">
+            {links.map((link, iter) => (
+              <div key={iter}>
+                <Link href={link.url}>
+                  <a className="hover:text-spotify-text">{link.label}</a>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
 
         <PlaybackControls className="mt-6" />

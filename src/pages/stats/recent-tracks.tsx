@@ -14,9 +14,7 @@ const RecentTracksPage: React.FC<{}> = () => {
         <title>Recent Tracks</title>
       </Head>
 
-      <main>
-        <RecentTracks />
-      </main>
+      <RecentTracks />
     </>
   )
 }

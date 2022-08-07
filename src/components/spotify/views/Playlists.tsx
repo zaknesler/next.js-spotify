@@ -45,7 +45,7 @@ export const Playlists: React.FC<{ className?: string }> = ({ className }) => {
       </h3>
 
       <ul className="mt-3 space-y-3">
-        {data?.items.map(playlist => (
+        {data?.items?.map(playlist => (
           <li key={playlist.id}>{playlist.name}</li>
         ))}
       </ul>

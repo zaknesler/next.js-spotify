@@ -14,9 +14,7 @@ const TopTracksPage: React.FC<{}> = () => {
         <title>Top Tracks</title>
       </Head>
 
-      <main>
-        <TopTracks />
-      </main>
+      <TopTracks />
     </>
   )
 }
