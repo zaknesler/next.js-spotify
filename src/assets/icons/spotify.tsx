@@ -2,8 +2,8 @@ import React from 'react'
 
 type ColorChoice = 'white' | 'brand'
 const colorClasses = {
-  brand: 'text-[#1ed760]',
   white: 'text-white',
+  brand: 'text-spotify-brand',
 }
 
 export const SpotifyLogo: React.FC<{

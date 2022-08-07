@@ -37,7 +37,7 @@ export const SpotifyListPlaylists: React.FC<{ className?: string }> = ({
 
   return (
     <div className={className}>
-      <h3 className="w-full border-b-4 border-[#1db954] border-opacity-25 pb-1 font-semibold sm:w-48">
+      <h3 className="w-full border-b-4 border-spotify-brand border-opacity-25 pb-1 font-semibold md:w-48">
         Your playlists{' '}
         {hasMoreItems() && (
           <button onClick={() => setOffset(v => (v += data.limit))}>
@@ -47,7 +47,7 @@ export const SpotifyListPlaylists: React.FC<{ className?: string }> = ({
       </h3>
 
       <ul className="mt-3 space-y-3">
-        {data.items.map(playlist => (
+        {data?.items.map(playlist => (
           <li key={playlist.id}>{playlist.name}</li>
         ))}
       </ul>
