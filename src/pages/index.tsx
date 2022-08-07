@@ -1,6 +1,7 @@
 import Head from 'next/head'
-import { SpotifyListPlaylists } from '../components/spotify/pages/SpotifyListPlaylists'
-import { SpotifyTopTracks } from '../components/spotify/pages/SpotifyTopTracks'
+import { Playlists } from '../components/spotify/views/Playlists'
+import { RecentTracks } from '../components/spotify/views/RecentTracks'
+import { TopTracks } from '../components/spotify/views/TopTracks'
 import { useSpotifyAuthContext } from '../hooks/useSpotifyAuth'
 
 const IndexPage = () => {
@@ -15,8 +16,9 @@ const IndexPage = () => {
       <main>
         {isAuthed() && (
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
-            <SpotifyTopTracks />
-            <SpotifyListPlaylists />
+            <TopTracks />
+            <RecentTracks />
+            <Playlists />
           </div>
         )}
       </main>

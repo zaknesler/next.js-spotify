@@ -6,7 +6,7 @@ import type { Track } from '../../../utils/api/spotify/types'
 import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 import { TrackItem } from '../TrackItem'
 
-export type SpotifyCurrentlyPlayingResponse = {
+export type CurrentlyPlayingResponse = {
   timestamp: number
   progress_ms: number
   item: Track
@@ -14,11 +14,11 @@ export type SpotifyCurrentlyPlayingResponse = {
   is_playing: boolean
 }
 
-export const SpotifyCurrentlyPlaying: React.FC<{ className?: string }> = ({
+export const CurrentlyPlaying: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const { auth, isAuthed } = useSpotifyAuthContext()
-  const { data } = useSWR<SpotifyCurrentlyPlayingResponse>(
+  const { data } = useSWR<CurrentlyPlayingResponse>(
     isAuthed() ? [ENDPOINTS.ME.CURRENTLY_PLAYING, auth] : null,
     spotifyFetcher,
   )

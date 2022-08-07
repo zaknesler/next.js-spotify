@@ -1,7 +1,7 @@
 import React from 'react'
-import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
+import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 
-export const SpotifyLogoutButton: React.FC<{ className?: string }> = ({
+export const LogoutButton: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const { isAuthed, logout } = useSpotifyAuthContext()

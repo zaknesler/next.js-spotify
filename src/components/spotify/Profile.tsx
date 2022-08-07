@@ -1,9 +1,7 @@
 import React from 'react'
-import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
+import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 
-export const SpotifyProfile: React.FC<{ className?: string }> = ({
-  className,
-}) => {
+export const Profile: React.FC<{ className?: string }> = ({ className }) => {
   const { user } = useSpotifyAuthContext()
 
   if (!user) return

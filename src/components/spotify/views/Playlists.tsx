@@ -5,7 +5,7 @@ import { ENDPOINTS } from '../../../utils/api/spotify/constants'
 import type { Playlist } from '../../../utils/api/spotify/types'
 import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 
-type SpotifyListPlaylistsResponse = {
+type PlaylistsResponse = {
   items: Playlist[]
   limit: number
   offset: number
@@ -15,12 +15,10 @@ type SpotifyListPlaylistsResponse = {
   href: string
 }
 
-export const SpotifyListPlaylists: React.FC<{ className?: string }> = ({
-  className,
-}) => {
+export const Playlists: React.FC<{ className?: string }> = ({ className }) => {
   const { auth, user, isAuthed } = useSpotifyAuthContext()
   const [offset, setOffset] = useState(0)
-  const { data, error } = useSWR<SpotifyListPlaylistsResponse>(
+  const { data, error } = useSWR<PlaylistsResponse>(
     isAuthed() && !!user
       ? [`${ENDPOINTS.USERS.PLAYLISTS(user.id)}?offset=${offset}`, auth]
       : null,

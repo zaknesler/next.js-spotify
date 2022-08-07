@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import React from 'react'
-import { RecentTracks } from '../../components/spotify/views/RecentTracks'
+import { TopTracks } from '../../components/spotify/views/TopTracks'
 import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 
-const RecentTracksPage: React.FC<{}> = () => {
+const TopTracksPage: React.FC<{}> = () => {
   const { isAuthed } = useSpotifyAuthContext()
 
   if (!isAuthed()) return
@@ -11,14 +11,14 @@ const RecentTracksPage: React.FC<{}> = () => {
   return (
     <>
       <Head>
-        <title>Recent Tracks</title>
+        <title>Top Tracks</title>
       </Head>
 
       <main>
-        <RecentTracks />
+        <TopTracks />
       </main>
     </>
   )
 }
 
-export default RecentTracksPage
+export default TopTracksPage

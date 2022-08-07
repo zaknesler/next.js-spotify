@@ -6,7 +6,7 @@ import type { Track } from '../../../utils/api/spotify/types'
 import { spotifyFetcher } from '../../../utils/api/spotify/utils'
 import { TrackItem } from '../TrackItem'
 
-type SpotifyTopTracksResponse = {
+type TopTracksResponse = {
   items: Track[]
   limit: number
   offset: number
@@ -14,11 +14,9 @@ type SpotifyTopTracksResponse = {
   next: string
 }
 
-export const SpotifyTopTracks: React.FC<{ className?: string }> = ({
-  className,
-}) => {
+export const TopTracks: React.FC<{ className?: string }> = ({ className }) => {
   const { auth, isAuthed } = useSpotifyAuthContext()
-  const { data, error } = useSWR<SpotifyTopTracksResponse>(
+  const { data, error } = useSWR<TopTracksResponse>(
     isAuthed() ? [ENDPOINTS.ME.TOP_TRACKS, auth] : null,
     spotifyFetcher,
   )
