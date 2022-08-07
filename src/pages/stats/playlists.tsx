@@ -14,9 +14,7 @@ const PlaylistsPage: React.FC<{}> = () => {
         <title>Your playlists</title>
       </Head>
 
-      <main>
-        <Playlists />
-      </main>
+      <Playlists />
     </>
   )
 }

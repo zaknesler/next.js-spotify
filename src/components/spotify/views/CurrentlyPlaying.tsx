@@ -19,7 +19,7 @@ export const CurrentlyPlaying: React.FC<{ className?: string }> = ({
 }) => {
   const { auth, isAuthed } = useSpotifyAuthContext()
   const { data } = useSWR<CurrentlyPlayingResponse>(
-    isAuthed() ? [ENDPOINTS.ME.CURRENTLY_PLAYING, auth] : null,
+    isAuthed() ? [ENDPOINTS.ME.CURRENTLY_PLAYING, { auth }] : null,
     spotifyFetcher,
   )
 

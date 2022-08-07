@@ -20,7 +20,7 @@ export const Playlists: React.FC<{ className?: string }> = ({ className }) => {
   const [offset, setOffset] = useState(0)
   const { data, error } = useSWR<PlaylistsResponse>(
     isAuthed() && !!user
-      ? [`${ENDPOINTS.USERS.PLAYLISTS(user.id)}?offset=${offset}`, auth]
+      ? [`${ENDPOINTS.USERS.PLAYLISTS(user.id)}?offset=${offset}`, { auth }]
       : null,
     spotifyFetcher,
   )
@@ -45,7 +45,7 @@ export const Playlists: React.FC<{ className?: string }> = ({ className }) => {
       </h3>
 
       <ul className="mt-3 space-y-3">
-        {data?.items.map(playlist => (
+        {data?.items?.map(playlist => (
           <li key={playlist.id}>{playlist.name}</li>
         ))}
       </ul>

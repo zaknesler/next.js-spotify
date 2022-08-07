@@ -11,9 +11,8 @@ export const LogoutButton: React.FC<{ className?: string }> = ({
   return (
     <div className={className}>
       <a
-        href="#"
         onClick={logout}
-        className="text-sm font-semibold text-spotify-text hover:underline"
+        className="cursor-pointer text-sm font-semibold text-spotify-text hover:underline"
       >
         Sign out
       </a>

@@ -11,6 +11,9 @@ module.exports = {
           brand: '#1db954',
         },
       },
+      maxWidth: {
+        '2xs': '18rem',
+      },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },

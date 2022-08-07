@@ -17,7 +17,7 @@ export type TopTracksResponse = {
 export const TopTracks: React.FC<{ className?: string }> = ({ className }) => {
   const { auth, isAuthed } = useSpotifyAuthContext()
   const { data, error } = useSWR<TopTracksResponse>(
-    isAuthed() ? [ENDPOINTS.ME.TOP_TRACKS, auth] : null,
+    isAuthed() ? [ENDPOINTS.ME.TOP_TRACKS, { auth }] : null,
     spotifyFetcher,
   )
 
