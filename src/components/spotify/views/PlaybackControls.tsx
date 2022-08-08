@@ -31,7 +31,7 @@ export const PlaybackControls: React.FC<{ className?: string }> = ({
 
   useEffect(() => data && setIsPlaying(data.is_playing), [data])
 
-  if (!isAuthed() || !data) return
+  if (!isAuthed() || !data) return null
   if (error) return <div>Failed to load!</div>
 
   const resume = async () => {

@@ -27,7 +27,7 @@ export const Playlists: React.FC<{ className?: string }> = ({ className }) => {
 
   useEffect(() => data && setOffset(data.offset), [data])
 
-  if (!isAuthed()) return
+  if (!isAuthed()) return null
   if (!data) return <div>Loading...</div>
   if (error) return <div>Failed to load!</div>
 

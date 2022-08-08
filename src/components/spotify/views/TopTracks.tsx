@@ -21,7 +21,7 @@ export const TopTracks: React.FC<{ className?: string }> = ({ className }) => {
     spotifyFetcher,
   )
 
-  if (!isAuthed()) return
+  if (!isAuthed()) return null
   if (!data) return <div>Loading...</div>
   if (error) return <div>Failed to load!</div>
 

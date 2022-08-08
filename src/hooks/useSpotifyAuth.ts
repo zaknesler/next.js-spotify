@@ -22,13 +22,13 @@ export const useSpotifyAuthContext = () => useContext(SpotifyAuthContext)
 export const useSpotifyAuth = (): SpotifyContextData => {
   const router = useRouter()
   const { cookies, clearCookies } = useCookies<SpotifyAuthCookies>()
-  const [auth, setAuth] = useState<SpotifyAuthData>(null)
+  const [auth, setAuth] = useState<SpotifyAuthData | null>(null)
 
   const isAuthed = () =>
     auth &&
     cookies &&
     auth.isAuthenticated &&
-    Boolean(auth.session) &&
+    auth.session &&
     !hasAccessTokenExpired(auth.session.expires_at) &&
     !haveAuthScopesChanged(auth.session.scopes)
 
@@ -65,6 +65,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
 
   useEffect(() => {
     if (!auth?.isAuthenticated) return
+    if (!auth?.session) return
 
     if (hasAccessTokenExpired(auth.session.expires_at)) {
       router.push('/api/auth/spotify/reauth')

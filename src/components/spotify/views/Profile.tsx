@@ -4,7 +4,7 @@ import { useSpotifyAuthContext } from '../../../hooks/useSpotifyAuth'
 export const Profile: React.FC<{ className?: string }> = ({ className }) => {
   const { user } = useSpotifyAuthContext()
 
-  if (!user) return
+  if (!user) return null
 
   return (
     <div className={className}>

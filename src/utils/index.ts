@@ -6,7 +6,7 @@ export const isProd = () => process.env.NODE_ENV === 'production'
 
 export const formatCookie = (
   name: string,
-  value: string,
+  value?: string,
   options: CookieSerializeOptions = {},
 ): string | null =>
   value
