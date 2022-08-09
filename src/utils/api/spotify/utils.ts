@@ -7,8 +7,9 @@ import type { SpotifyAuthData } from './types'
 
 export const spotifyFetcher = (
   input: RequestInfo | URL,
-  init: { auth: SpotifyAuthData } & RequestInit,
+  init: { auth: SpotifyAuthData | null } & RequestInit,
 ): Promise<Response> | any => {
+  if (!init.auth) return null
   if (!init.auth.isAuthenticated || !init.auth.session) return null
 
   return fetch(input, {
@@ -37,7 +38,7 @@ export const formatAuthCookies = (data: {
   scope?: string
   state?: string
   expires_in?: number
-}) =>
+}): string[] =>
   [
     formatCookie(COOKIE_KEYS.ACCESS_TOKEN, data.access_token),
     formatCookie(COOKIE_KEYS.REFRESH_TOKEN, data.refresh_token, {
@@ -49,7 +50,7 @@ export const formatAuthCookies = (data: {
       COOKIE_KEYS.EXPIRES_AT,
       dayjs().add(Number(data.expires_in), 'second').toISOString(),
     ),
-  ].filter(Boolean)
+  ].filter(Boolean) as string[]
 
 export const hasAccessTokenExpired = (expires_at: dayjs.ConfigType) =>
   dayjs().isAfter(dayjs(expires_at))

@@ -9,18 +9,18 @@ export type SpotifyAuthCookies = {
 }
 
 export type SpotifyContextData = {
-  auth: SpotifyAuthData
-  user: SpotifyUserData
+  auth: SpotifyAuthData | null
+  user: SpotifyUserData | null
   isAuthed: () => boolean
-  setAuth: Dispatch<SetStateAction<SpotifyAuthData>>
+  setAuth: Dispatch<SetStateAction<SpotifyAuthData | null>>
   invalidate: () => void
   logout: () => void
 }
 
 export type SpotifyAuthData = {
   isAuthenticated: boolean
-  session?: SpotifyAuthSession
-  user?: SpotifyUserData
+  session?: SpotifyAuthSession | null
+  user?: SpotifyUserData | null
 }
 
 export type SpotifyAuthSession = {
