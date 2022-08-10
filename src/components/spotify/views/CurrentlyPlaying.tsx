@@ -23,7 +23,7 @@ export const CurrentlyPlaying: React.FC<{ className?: string }> = ({
     spotifyFetcher,
   )
 
-  if (!isAuthed() || !data) return
+  if (!isAuthed() || !data) return null
 
   return (
     <div className={className}>

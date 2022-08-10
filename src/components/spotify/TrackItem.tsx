@@ -5,7 +5,7 @@ export const TrackItem: React.FC<{ track: Track; className?: string }> = ({
   track,
   className,
 }) => {
-  if (!track) return
+  if (!track) return null
 
   const image = track.album.images.filter(image => image.width === 64)[0]
 

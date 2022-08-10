@@ -8,7 +8,7 @@ export const LoginButton: React.FC<{ className?: string }> = ({
 }) => {
   const { isAuthed } = useSpotifyAuthContext()
 
-  if (isAuthed()) return
+  if (isAuthed()) return null
 
   return (
     <div className={className}>

@@ -6,7 +6,7 @@ import { useSpotifyAuthContext } from '../../hooks/useSpotifyAuth'
 const PlaylistsPage: React.FC<{}> = () => {
   const { isAuthed } = useSpotifyAuthContext()
 
-  if (!isAuthed()) return
+  if (!isAuthed()) return null
 
   return (
     <>
