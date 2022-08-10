@@ -8,7 +8,7 @@ import {
 } from '../../../../utils/api/spotify/utils'
 import { ERROR_MESSAGES } from '../../../../utils/errors'
 
-type AuthQueryParams = {
+type CallbackRequestQueryParams = {
   state: string
   code?: string
   error?: string
@@ -25,7 +25,7 @@ type SpotifyAccessTokenResponse = {
 type CallbackRequestExpectedCookies = Pick<SpotifyAuthCookies, 'spotify_state'>
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { state, code, error } = req.query as AuthQueryParams
+  const { state, code, error } = req.query as CallbackRequestQueryParams
   const { spotify_state } = req.cookies as any as CallbackRequestExpectedCookies
 
   if (error) return res.status(400).json({ error })
@@ -47,8 +47,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
     .then(data => data.json())
     .catch(console.log)
-
-  console.log('callback', { data, state })
 
   res.setHeader('Set-Cookie', formatAuthCookies({ ...data, state }))
 

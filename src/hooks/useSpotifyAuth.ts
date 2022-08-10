@@ -37,10 +37,7 @@ export const useSpotifyAuth = (): SpotifyContextData => {
     clearCookies()
   }
 
-  const login = () => {
-    ensureHasState()
-    router.push('/api/auth/spotify/login')
-  }
+  const login = () => router.push('/api/auth/spotify/login')
 
   const logout = () =>
     fetch('/api/auth/spotify/logout', { method: 'POST' }).then(invalidate)
