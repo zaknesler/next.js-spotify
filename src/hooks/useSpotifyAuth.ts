@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { ENDPOINTS } from '../utils/api/spotify/constants'
 import {
@@ -37,13 +37,30 @@ export const useSpotifyAuth = (): SpotifyContextData => {
     clearCookies()
   }
 
+  const login = () => {
+    ensureHasState()
+    router.push('/api/auth/spotify/login')
+  }
+
   const logout = () =>
     fetch('/api/auth/spotify/logout', { method: 'POST' }).then(invalidate)
+
+  const ensureHasState = useCallback(
+    () =>
+      cookies &&
+      !cookies.spotify_state &&
+      router.push('/api/auth/spotify/init'),
+    [cookies, router],
+  )
 
   const { data: user = null } = useSWR<SpotifyUserData>(
     isAuthed() ? [ENDPOINTS.ME.PROFILE, { auth }] : null,
     spotifyFetcher,
   )
+
+  useEffect(() => {
+    ensureHasState()
+  }, [ensureHasState])
 
   useEffect(() => {
     if (auth?.session || user) return
@@ -78,5 +95,5 @@ export const useSpotifyAuth = (): SpotifyContextData => {
     }
   }, [auth, router])
 
-  return { auth, setAuth, user, invalidate, logout, isAuthed }
+  return { auth, user, setAuth, invalidate, login, logout, isAuthed }
 }

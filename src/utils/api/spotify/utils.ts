@@ -48,7 +48,9 @@ export const formatAuthCookies = (data: {
     formatCookie(COOKIE_KEYS.STATE, data.state),
     formatCookie(
       COOKIE_KEYS.EXPIRES_AT,
-      dayjs().add(Number(data.expires_in), 'second').toISOString(),
+      Number(data.expires_in)
+        ? dayjs().add(Number(data.expires_in), 'second').toISOString()
+        : null,
     ),
   ].filter(Boolean) as string[]
 

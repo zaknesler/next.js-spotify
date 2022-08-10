@@ -7,6 +7,7 @@ import {
   getBase64AuthString,
   hasAccessTokenExpired,
 } from '../../../../utils/api/spotify/utils'
+import { ERROR_MESSAGES } from '../../../../utils/errors'
 
 type SpotifyRefreshTokenResponse = {
   access_token: string
@@ -15,16 +16,18 @@ type SpotifyRefreshTokenResponse = {
   expires_in: number
 }
 
+type ReauthRequestExpectedCookies = Pick<
+  SpotifyAuthCookies,
+  'spotify_refresh_token' | 'spotify_expires_at'
+>
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { spotify_refresh_token, spotify_expires_at } =
-    req.cookies as SpotifyAuthCookies
+    req.cookies as any as ReauthRequestExpectedCookies
 
-  if (!spotify_refresh_token || !spotify_expires_at) return null
-
-  if (!hasAccessTokenExpired(spotify_expires_at)) {
-    // No need to reauth
-    return res.redirect('/')
-  }
+  if (!spotify_refresh_token || !spotify_expires_at)
+    return res.status(400).json({ error: ERROR_MESSAGES.QUERY_PARAMS_MISSING })
+  if (!hasAccessTokenExpired(spotify_expires_at)) return res.redirect('/')
 
   const data: SpotifyRefreshTokenResponse = await fetch(ACCESS_TOKEN_URL, {
     method: 'POST',
