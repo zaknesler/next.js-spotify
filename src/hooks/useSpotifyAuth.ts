@@ -42,22 +42,14 @@ export const useSpotifyAuth = (): SpotifyContextData => {
   const logout = () =>
     fetch('/api/auth/spotify/logout', { method: 'POST' }).then(invalidate)
 
-  const ensureHasState = useCallback(
-    () =>
-      cookies &&
-      !cookies.spotify_state &&
-      router.push('/api/auth/spotify/init'),
-    [cookies, router],
-  )
-
   const { data: user = null } = useSWR<SpotifyUserData>(
     isAuthed() ? [ENDPOINTS.ME.PROFILE, { auth }] : null,
     spotifyFetcher,
   )
 
   useEffect(() => {
-    ensureHasState()
-  }, [ensureHasState])
+    cookies && !cookies.spotify_state && router.push('/api/auth/spotify/init')
+  }, [cookies, router])
 
   useEffect(() => {
     if (auth?.session || user) return
