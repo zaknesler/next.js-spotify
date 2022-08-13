@@ -48,10 +48,6 @@ export const useSpotifyAuth = (): SpotifyContextData => {
   )
 
   useEffect(() => {
-    cookies && !cookies.spotify_state && router.push('/api/auth/spotify/init')
-  }, [cookies, router])
-
-  useEffect(() => {
     if (auth?.session || user) return
 
     const isAuthenticated = Boolean(cookies?.spotify_access_token)

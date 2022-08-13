@@ -16,3 +16,5 @@ export const formatCookie = (
         ...options,
       })
     : null
+
+export const generateToken = () => Math.random().toString(36).slice(2)
