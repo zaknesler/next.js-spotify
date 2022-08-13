@@ -29,7 +29,9 @@ export const PlaybackControls: React.FC<{ className?: string }> = ({
     { refreshInterval: 1000 },
   )
 
-  useEffect(() => data && setIsPlaying(data.is_playing), [data])
+  useEffect(() => {
+    data && setIsPlaying(data.is_playing)
+  }, [data])
 
   if (!isAuthed() || !data) return null
   if (error) return <div>Failed to load!</div>

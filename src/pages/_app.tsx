@@ -19,8 +19,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <SWRConfig value={{ fetcher }}>
         <div className="flex flex-col overflow-hidden md:h-full md:w-full md:flex-row">
-          <Sidebar className="w-full flex-shrink-0 p-8 pb-4 sm:pb-8 md:max-w-xs md:pr-4" />
-          <main className="flex-1 overflow-y-auto p-8 pt-4 sm:pt-8 md:pl-4">
+          <Sidebar className="w-full flex-shrink-0 p-8 pb-0 md:max-w-xs md:pb-8 md:pr-4" />
+          <main className="flex-1 overflow-y-auto p-8 md:pt-8 md:pl-4">
             <Component {...pageProps} />
           </main>
         </div>

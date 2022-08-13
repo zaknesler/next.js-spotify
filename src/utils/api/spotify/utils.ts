@@ -1,14 +1,15 @@
 import dayjs from 'dayjs'
 import { NextApiRequest } from 'next'
 import { formatCookie } from '../..'
+import { parseResponseAsJson } from '../../fetcher'
 import { error } from '../../logger'
 import { AUTH_SCOPES, COOKIE_KEYS } from './constants'
 import type { SpotifyAuthData } from './types'
 
-export const spotifyFetcher = (
+export const spotifyFetcher = async (
   input: RequestInfo | URL,
   init: { auth: SpotifyAuthData | null } & RequestInit,
-): Promise<Response> | any => {
+): Promise<Response | object | null | void | any> => {
   if (!init.auth) return null
   if (!init.auth.isAuthenticated || !init.auth.session) return null
 
@@ -19,7 +20,7 @@ export const spotifyFetcher = (
       Authorization: `Bearer ${init.auth.session.access_token}`,
     },
   })
-    .then(res => res.json())
+    .then(parseResponseAsJson)
     .catch(error)
 }
 
