@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ACCESS_TOKEN_URL } from '../../../../utils/api/spotify/constants'
 import { SpotifyAuthCookies } from '../../../../utils/api/spotify/types'

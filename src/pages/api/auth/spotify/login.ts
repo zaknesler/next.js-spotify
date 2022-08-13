@@ -8,9 +8,6 @@ type SetStateRequestExpectedCookies = Pick<SpotifyAuthCookies, 'spotify_state'>
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const { spotify_state } = req.cookies as any as SetStateRequestExpectedCookies
 
-  if (!spotify_state)
-    return res.redirect('/api/auth/spotify/init?redirect=login')
-
   const params = new URLSearchParams({
     response_type: 'code',
     scope: AUTH_SCOPES.join(' '),
