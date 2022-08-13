@@ -13,7 +13,12 @@ module.exports = {
     ecmaVersion: 2021,
   },
   extends: ['next/core-web-vitals', 'prettier', 'plugin:import/recommended'],
-  plugins: ['react', '@next/eslint-plugin-next', 'prettier', 'unused-imports'],
+  plugins: [
+    'react',
+    '@next/eslint-plugin-next',
+    'prettier',
+    '@typescript-eslint/eslint-plugin',
+  ],
   rules: {
     'import/default': ['error'],
     'import/first': ['error', 'absolute-first'],
@@ -34,6 +39,7 @@ module.exports = {
     'no-nested-ternary': 0,
     'no-underscore-dangle': 0,
     'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
     'prettier/prettier': [
       'error',
       {
@@ -42,15 +48,6 @@ module.exports = {
         singleQuote: true,
         tabWidth: 2,
         trailingComma: 'all',
-      },
-    ],
-    'unused-imports/no-unused-vars': [
-      'warn',
-      {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
       },
     ],
   },
